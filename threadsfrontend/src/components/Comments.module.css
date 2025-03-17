@@ -1,0 +1,74 @@
+.commentContainer {
+    background-color: #181818;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    width: 100%;
+    font-family: Arial, sans-serif;
+    margin-bottom: 10px;
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .profilePic {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .userInfo {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .username {
+    font-weight: bold;
+  }
+  
+  .timeCont {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .time {
+    color: gray;
+    font-size: 14px;
+  }
+  
+  .commentText {
+    margin-top: 5px;
+    font-size: 15px;
+  }
+  
+  .actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 5px;
+  }
+  
+  .icon {
+    font-size: 18px;
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .liked {
+    color: red !important;
+  }
+  
+  .footer {
+    color: gray;
+    margin-top: 5px;
+    font-size: 14px;
+  }
+  .separation{
+    border-bottom: 0.5px solid #ffffff4a;
+    margin-top: 5px;
+  }

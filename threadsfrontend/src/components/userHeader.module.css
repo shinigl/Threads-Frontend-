@@ -1,0 +1,171 @@
+.container {
+    background-color: #181818;
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 650px;
+    margin: auto;
+  }
+  
+  .profile {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+  }
+  .imgCont{
+    width: 30%;
+    margin-left: 80px;
+    display: flex;
+    justify-content: flex-end; 
+    align-self: start;
+}
+  
+  .avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .info {
+    text-align: left;
+    width: 55%;
+  }
+  
+  .name {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .username {
+    font-size: 14px;
+    color: #aaa;
+  }
+  
+  .bio {
+    font-size: 14px;
+    margin: 5px 0;
+    margin-top: 30px;
+  }
+  
+  .followers {
+    font-size: 12px;
+    color: #aaa;
+    margin-top: 5px;
+  }
+  
+  .icons {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+    justify-content: flex-end;
+   
+  }
+  
+  .icon {
+    font-size: 25px;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s ease;
+  }
+  
+  .icon:hover {
+    color: #aaa;
+  }
+  
+  .editButton {
+    margin-top: 10px;
+    padding: 8px 15px;
+    background-color: #181818;
+    color: white;
+    border-radius: 10px;
+    border: 1px solid #555;
+    cursor: pointer;
+    transition: 0.3s ease;
+  }
+  
+  .editButton:hover {
+    background-color: #555;
+  }
+  
+  /* Dropdown container */
+.dropdownContainer {
+    position: relative;
+ 
+}
+
+/* Cloud-like dropdown menu */
+.dropMenu {
+    position: absolute;
+    top: 35px;
+    right: -10px;
+    background: #333;
+    color: white;
+    border-radius: 15px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    min-width: 160px;
+    text-align: center;
+    z-index: 10;
+}
+
+/* Add a cloud bubble effect */
+.dropMenu::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    right: 15px;
+    width: 20px;
+    height: 20px;
+    background: #333;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+/* Button inside dropdown */
+.dropMenu button {
+    background: none;
+    border: none;
+    color: white;
+    padding: 8px;
+    width: 100%;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.dropMenu button:hover {
+    background: #444;
+}
+
+.threadsContainer{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+}
+.threadsLine{
+    height: 1px;
+    width: 100%;
+    background-color: #fff;
+    margin-top: 5px;
+}
+.replyLine{
+    height: 1px;
+    width: 100%;
+    background-color: #333;
+    margin-top: 5px;
+}
+.threads{
+    text-align: center;
+    width: 50%;
+    cursor: pointer;
+   
+}
+.replies{
+    text-align: center;
+    width: 50%;
+    cursor: pointer;
+}

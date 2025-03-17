@@ -1,0 +1,85 @@
+/* Reset default margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Dark Theme Styling */
+body {
+   background-color: #181818;
+   color: #e0e0e0; /* Light text color */
+}
+
+/* Header Styling */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Subtle shadow */
+}
+
+/* Logo Image */
+.logoImage {
+  width: 40px;
+  height: auto;
+  cursor: pointer;
+  filter: invert(1);
+}
+
+/* Home Icon */
+.homeIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 2;
+  filter: invert(1);
+}
+
+/* Profile and Login section */
+.profileAndLogin {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* Profile Icon */
+.profileIcon {
+  margin-right: 15px;
+  cursor: pointer;
+  filter: invert(1);
+}
+
+/* Icon Styling (Home and Profile) */
+.icon {
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+  color: #e0e0e0; /* Light color for icons */
+}
+
+.icon:hover {
+  transform: scale(1.1);
+}
+
+/* Login Button Styling */
+.loginButton {
+  padding: 8px 15px;
+  font-size: 14px;
+  background-color: #007bff; /* Blue button color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.loginButton:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  transform: scale(1.05);
+}
+
+.loginButton:active {
+  transform: scale(1);
+}

@@ -1,0 +1,88 @@
+.postContainer {
+    background-color: #181818;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    width: 100%;
+    margin: auto;
+    font-family: Arial, sans-serif;
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .profilePic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .userInfo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .username {
+    font-weight: bold;
+  }
+  
+  .verified {
+    color: #1da1f2;
+    margin-left: 5px;
+  }
+  
+  .timeCont {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .time {
+    color: gray;
+    font-size: 15px;
+  }
+  
+  .caption {
+    margin-top: 10px;
+   
+  }
+  
+  .postImageContainer {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .postImage {
+    width: 70%;
+    border-radius: 10px;
+  }
+  
+  .actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+  }
+  
+  .icon {
+    font-size: 20px;
+    cursor: pointer;
+    transition: color 0.1s ease-in-out;
+  }
+  
+  .liked {
+    color: rgba(230, 32, 32, 0.806);
+  }
+  
+  .footer {
+    display: flex;
+    gap: 10px;
+    color: gray;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  
