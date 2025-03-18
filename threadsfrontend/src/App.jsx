@@ -5,6 +5,10 @@ import PostPage from './pages/PostPage';
 import UserPage from './pages/UserPage';
 import Header from './components/Header';
 import AuthPage from './pages/AuthPage';
+import { Provider } from 'react-redux';
+import store from './redux/store';
+
+
 
 const App = () => {
   const routes = createBrowserRouter([
@@ -27,9 +31,13 @@ const App = () => {
     
   ])
   return (
-    <>
+      
+      <>
+      <Provider store={store}>
       <Header/>
       <RouterProvider router={routes}></RouterProvider>
+      </Provider>
+
       </>
   );
 };

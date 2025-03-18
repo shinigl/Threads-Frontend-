@@ -1,12 +1,12 @@
-import React from 'react'
-import SignUp from '../components/SignUp'
+import React from "react";
+import { useSelector } from "react-redux";
+import Login from "../components/Login";
+import SignUp from "../components/SignUp";
 
 const AuthPage = () => {
-  return (
-   <>
-   <SignUp/>
-   </>
-  )
-}
+  const authScreen = useSelector((state) => state.auth.screen); // Get auth state
 
-export default AuthPage
+  return <>{authScreen === "login" ? <Login /> : <SignUp />}</>;
+};
+
+export default AuthPage;

@@ -1,0 +1,113 @@
+/* Dark Theme Styles */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #000; /* Dark background */
+    color: #fff;
+  }
+  
+  .loginBox {
+    width: 400px;
+    padding: 30px;
+    background: #1c1c1c; /* Darker card background */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+    text-align: center;
+  }
+  
+  .logo {
+    width: 50px;
+    filter: invert(1);
+    font-weight: bold;
+    color: #fff;
+  }
+  
+  .tagline {
+    font-size: 16px;
+    color: #aaa;
+    margin-bottom: 20px;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #333;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #222;
+    color: #fff;
+  }
+  
+  .input::placeholder {
+    color: #888;
+  }
+  
+  .loginButton {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background: #343232;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .loginButton:hover {
+    background: #2d2c2c;
+  }
+  
+  .signupText {
+    font-size: 14px;
+    margin-top: 15px;
+    color: #fff;
+    cursor: pointer;
+  }
+  .link {
+    transition: 0.3s ease;
+    color: #0077b6; /* Vibrant blue */
+    font-weight: 500;
+  }
+  
+  .link:hover {
+    color: #023e8a; /* Darker shade of blue */
+  }
+  
+  
+  .signupText a:hover {
+    text-decoration: underline;
+  }
+  
+
+.passwordContainer {
+    position: relative;
+  }
+  
+  .eyeIcon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
+    font-size: 20px;
+    transition: color 0.3s;
+  }
+  
+  .eyeIcon:hover {
+    color: #fff;
+  }
+  
+  /* Other styles remain the same as before */
+  
