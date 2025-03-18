@@ -47,6 +47,13 @@ const Header = () => {
       </div>
       <div className={styles.profileAndLogin}>
         <div className={styles.profileIcon}>
+          {
+            user?(
+              <span className={styles.userName}>{user.name}</span>
+            ):(
+              <span></span>
+            )
+          }
           <FaUserCircle size={30} className={styles.icon} />
         </div>
         {user ? (

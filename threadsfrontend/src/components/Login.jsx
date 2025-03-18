@@ -1,76 +1,119 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { setUser } from "../redux/userSlice"; // Import Redux action
 import { showSignUp } from "../redux/authSlice";
+import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 import logo from "../assets/logo.svg";
 import { FiEye, FiEyeOff } from "react-icons/fi"; // Import eye icons
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
-  const [formData, setFormData] = useState({
+  const [inputs, setInputs] = useState({
     username: "",
     password: "",
   });
 
-  const [showPassword, setShowPassword] = useState(false); // Toggle state
-  const dispatch = useDispatch(); // Redux dispatch
+  const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Login Data:", formData);
   };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+  const handleLogin = async () => {
+    try {
+      const res = await fetch(`/api/users/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(inputs),
+      });
+
+      const data = await res.json();
+      console.log(data);
+
+      if (data.error) {
+        toast.error(data.error, { position: "top-right" });
+        return;
+      }
+
+      // Store user in Redux
+      dispatch(setUser(data));
+     
+      // localStorage.setItem("user", JSON.stringify(data));
+
+
+      // Show success message & redirect after 1.5s
+      toast.success("Login successful! Redirecting to Home page", {
+        position: "top-right",
+        autoClose: 1500,
+        onClose: () => navigate("/", { replace: true }),
+      });
+
+    } catch (error) {
+      console.error("Error logging in:", error.message);
+      toast.error("Network error! Please try again.", { position: "top-right" });
+    }
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.loginBox}>
-        <img className={styles.logo} src={logo} alt="Logo" />
-        <p className={styles.tagline}>Welcome back</p>
+    <>
+      <div className={styles.container}>
+        <div className={styles.loginBox}>
+          <img className={styles.logo} src={logo} alt="Logo" />
+          <p className={styles.tagline}>Welcome back</p>
 
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            value={formData.username}
-            onChange={handleChange}
-            className={styles.input}
-            required
-          />
-          <div className={styles.passwordContainer}>
+          <form onSubmit={handleSubmit} className={styles.form}>
             <input
-              type={showPassword ? "text" : "password"}
-              name="password"
-              placeholder="Password"
-              value={formData.password}
+              type="text"
+              name="username"
+              placeholder="Username"
               onChange={handleChange}
+              value={inputs.username}
               className={styles.input}
               required
             />
-            <div className={styles.eyeIcon} onClick={togglePasswordVisibility}>
-              {showPassword ? <FiEye /> : <FiEyeOff />}
+            <div className={styles.passwordWrapper}>
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Password"
+                onChange={handleChange}
+                value={inputs.password}
+                className={styles.input}
+                required
+              />
+              <span
+                className={styles.eyeIcon}
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <FiEyeOff /> : <FiEye />}
+              </span>
             </div>
-          </div>
 
-          <button type="submit" className={styles.loginButton}>
-            Log In
-          </button>
-        </form>
+            <button onClick={handleLogin} type="submit" className={styles.loginButton}>
+              Log In
+            </button>
+          </form>
 
-        <p className={styles.signupText}>
-          Don't have an account?{" "}
-          <span onClick={() => dispatch(showSignUp())} className={styles.link}>
-            Sign up
-          </span>
-        </p>
+          <p className={styles.signupText}>
+            Don't have an account?{" "}
+            <span onClick={() => dispatch(showSignUp())} className={styles.link}>
+              Sign Up
+            </span>
+          </p>
+        </div>
       </div>
-    </div>
+      <ToastContainer />
+    </>
   );
 };
 
