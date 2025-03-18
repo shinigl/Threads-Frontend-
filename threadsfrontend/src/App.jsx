@@ -4,6 +4,7 @@ import Home from './components/Home';
 import PostPage from './pages/PostPage';
 import UserPage from './pages/UserPage';
 import Header from './components/Header';
+import AuthPage from './pages/AuthPage';
 
 const App = () => {
   const routes = createBrowserRouter([
@@ -18,6 +19,10 @@ const App = () => {
      {
       path: "/:username/post/:pid",
       element: <PostPage/>
+     },
+     {
+      path: '/auth',
+      element : <AuthPage/>
      }
     
   ])

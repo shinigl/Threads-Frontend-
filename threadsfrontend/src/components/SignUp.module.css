@@ -1,0 +1,85 @@
+/* Dark Theme Styles */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #000; /* Dark background */
+    color: #fff;
+  }
+  
+  .signupBox {
+    width: 400px;
+    padding: 30px;
+    background: #1c1c1c; /* Darker card background */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+    text-align: center;
+  }
+  
+  .logo {
+    width: 50px;
+    filter: invert(1);
+    font-weight: bold;
+    color: #fff;
+  }
+  
+  .tagline {
+    font-size: 16px;
+    color: #aaa;
+    margin-bottom: 20px;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #333;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #222;
+    color: #fff;
+  }
+  
+  .input::placeholder {
+    color: #888;
+  }
+  
+  .signupButton {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background: #1e1e1e;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .signupButton:hover {
+    background: #2d2c2c;
+  }
+  
+  .loginText {
+    font-size: 14px;
+    margin-top: 15px;
+    color: #aaa;
+  }
+  
+  .loginText a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .loginText a:hover {
+    text-decoration: underline;
+  }
+  
