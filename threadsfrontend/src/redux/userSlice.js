@@ -1,17 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// Load user from local storage 
-const loadUserFromStorage = () => {
-  try {
-    const storedUser = localStorage.getItem("user-threads");
-    return storedUser ? JSON.parse(storedUser) : {};
-  } catch (error) {
-    console.error("Error loading user from localStorage:", error);
-    return {};
-  }
-};
-
-const initialState = loadUserFromStorage();
+// Load user from local storage (if present)
+const storedUser = localStorage.getItem("user-threads");
+const initialState = storedUser ? JSON.parse(storedUser) : null;
 
 const userSlice = createSlice({
   name: "user",
@@ -28,12 +19,12 @@ const userSlice = createSlice({
     },
     clearUser: () => {
       localStorage.removeItem("user-threads");
-      return {};
+      return null;
     },
   },
 });
 
-export const { setUser, updateUser, clearUser } = userSlice.actions;
+export const { setUser, clearUser ,updateUser} = userSlice.actions;
 
 // Selector to get user data
 export const selectUser = (state) => state.user;

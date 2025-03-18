@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateUser } from "../redux/userSlice"; // Redux action to update user data
+import { updateUser } from "../redux/userSlice";
 import styles from "./UpdateProfilePage.module.css";
 
 const UpdateProfilePage = () => {
