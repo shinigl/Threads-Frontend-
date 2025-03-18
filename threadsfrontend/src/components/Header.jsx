@@ -16,7 +16,7 @@ const Header = () => {
   // Handle Logout
   const handleLogout = () => {
     toast.success("You have logged out successfully!", {
-      position: "top-right",
+      position: "top-center",
       autoClose: 1500, // Delay before redirect
       onClose: () => {
         dispatch(clearUser()); // Remove user from Redux

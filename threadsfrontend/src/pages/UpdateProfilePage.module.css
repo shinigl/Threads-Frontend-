@@ -1,0 +1,135 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #121212;
+    padding: 20px;
+  }
+  
+  .card {
+    background: #262626;
+    padding: 1.5rem;
+    border-radius: 12px;
+    max-width: 450px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .title {
+    color: #fff;
+    font-size: 20px;
+    margin-bottom: 1rem;
+  }
+  
+  .avatarContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #404040;
+  }
+  
+  .changeAvatar {
+    margin-top: 10px;
+    padding: 6px 12px;
+    background: #3a3a3a;
+    border-radius: 5px;
+    color: #ddd;
+    font-size: 14px;
+    cursor: pointer;
+    display: inline-block;
+  }
+  
+  .changeAvatar input {
+    display: none;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
+  
+  label {
+    color: #bbb;
+    font-size: 14px;
+    margin: 8px 0 4px;
+  }
+  
+  .input {
+    background: #333;
+    border: 1px solid #555;
+    padding: 10px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  .input::placeholder {
+    color: #888;
+  }
+  
+  .buttonGroup {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+  }
+  
+  .cancelButton,
+  .submitButton {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 0 5px;
+    transition: all 0.3s ease;
+  }
+  
+  .cancelButton {
+    background: #e1306c;
+    color: white;
+  }
+  
+  .submitButton {
+    background: #3897f0;
+    color: white;
+  }
+  
+  .cancelButton:hover,
+  .submitButton:hover {
+    opacity: 0.8;
+  }
+  
+  /* Mobile Responsive */
+  @media (max-width: 500px) {
+    .card {
+      padding: 1.2rem;
+    }
+  
+    .input {
+      font-size: 13px;
+      padding: 8px;
+    }
+  
+    .buttonGroup {
+      flex-direction: column;
+    }
+  
+    .cancelButton,
+    .submitButton {
+      margin-bottom: 8px;
+    }
+  }
+  

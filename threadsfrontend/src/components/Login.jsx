@@ -48,7 +48,7 @@ const Login = () => {
       // Store user in Redux
       dispatch(setUser(data));
      
-      // localStorage.setItem("user", JSON.stringify(data));
+      localStorage.setItem("user-threads", JSON.stringify(data));
 
 
       // Show success message & redirect after 1.5s
