@@ -1,54 +1,75 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FaInstagram } from 'react-icons/fa';
 import { BsThreeDots } from 'react-icons/bs';
-import { toast } from 'react-toastify';
-import { ToastContainer } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux'; // Import useSelector to get user state
+import { toast, ToastContainer } from 'react-toastify';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import styles from './UserHeader.module.css';
-import pfp from '../assets/pfp.png';
-import post1 from '../assets/post1.png';
-import post2 from '../assets/post2.png';
-import UserPost from './UserPost';
-import { useParams } from 'react-router-dom';
-import { selectUser } from '../redux/userSlice'; // Import Redux selector
 import defaultPic from '../assets/defaultUserPic.webp';
+import UserPost from './UserPost';
+import { selectUser } from '../redux/userSlice';
 
 const UserHeader = () => {
     const [user, setUser] = useState(null);
     const { username } = useParams();
     const navigate = useNavigate();
-    const currentUser = useSelector(selectUser); // Get logged-in user from Redux
-
+    const currentUser = useSelector(selectUser);
+    const [following, setFollowing] = useState(false);
+    const [dropDown, setDropDown] = useState(false);
+    const dropdownRef = useRef(null);
     useEffect(() => {
         const getUser = async () => {
+            if (!username) return; // Prevent fetching if username is missing
+    
             try {
                 const res = await fetch(`/api/users/profile/${username}`);
                 const data = await res.json();
+    
                 if (data.error) {
-                    toast.error(data.error, { position: "top-center" });
-
-                    setTimeout(() => {
-                        navigate('/error');
-                    }, 2000);
+                    toast.error(data.error, { position: "top-center",autoClose:500 },);
+                    setTimeout(() => navigate('/error'), 500);
                     return;
                 }
+    
                 setUser(data);
+                setFollowing(data.followers.includes(currentUser?._id));
             } catch (err) {
                 toast.error('Failed to load user profile!');
-                setTimeout(() => {
-                    navigate('/error');
-                }, 2000);
+                setTimeout(() => navigate('/error'), 2000);
             }
         };
+    
         getUser();
-    }, [username, navigate]);
+    }, [username, navigate, currentUser]);
+    
 
-    const [dropDown, setDropDown] = useState(false);
-    const dropdownRef = useRef(null);
+    const handleFollowUnfollow = async () => {
+        if (!currentUser) {
+            toast.error("You need to log in first!");
+            return;
+        }
 
-    const onThreeDotsClick = () => {
-        setDropDown(!dropDown);
+        try {
+            const res = await fetch(`/api/users/follow/${user._id}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userId: user._id }),
+            });
+
+            const data = await res.json();
+            console.log(data);
+
+            if (res.ok) {
+                setFollowing(!following); // Toggle follow state
+                toast.success(following ? 'Unfollowed!' : 'Followed!',{
+                    autoClose:1000
+                });
+            } else {
+                toast.error(data.error || 'Something went wrong!');
+            }
+        } catch (err) {
+            toast.error('Error updating follow status.');
+        }
     };
 
     const handleCopyFnx = () => {
@@ -64,9 +85,7 @@ const UserHeader = () => {
         setDropDown(false);
     };
 
-    if (!user) {
-        return null; // Show nothing while loading user
-    }
+    if (!user) return null; // Show nothing while loading user
 
     return (
         <>
@@ -76,17 +95,17 @@ const UserHeader = () => {
                         <h2 className={styles.name}>{user.name}</h2>
                         <p className={styles.username}>@{user.username}</p>
                         <p className={styles.bio}>{user.bio}</p>
-                        <p className={styles.followers}>{user.followers || 0} followers</p>
+                        <p className={styles.followers}>{user.followers.length || 0} followers</p>
                     </div>
                     <div className={styles.imgCont}>
-                        <img src={user.profilePic || defaultPic } alt="Profile" className={styles.avatar} />
+                        <img src={user.profilePic || defaultPic} alt="Profile" className={styles.avatar} />
                     </div>
                 </div>
 
                 <div className={styles.icons}>
                     <FaInstagram className={styles.icon} />
                     <div className={styles.dropdownContainer} ref={dropdownRef}>
-                        <BsThreeDots onClick={onThreeDotsClick} className={styles.icon} />
+                        <BsThreeDots onClick={() => setDropDown(!dropDown)} className={styles.icon} />
                         {dropDown && (
                             <div className={styles.dropMenu}>
                                 <button onClick={handleCopyFnx}>Copy profile link</button>
@@ -95,17 +114,14 @@ const UserHeader = () => {
                     </div>
                 </div>
 
-                {/* Show Update Profile or Follow Button */}
+                {/* Show Update Profile or Follow/Unfollow Button */}
                 {currentUser?.username === user.username ? (
-                    <button
-                        className={styles.editButton}
-                        onClick={() => navigate('/update')}
-                    >
+                    <button className={styles.editButton} onClick={() => navigate('/update')}>
                         Update Profile
                     </button>
                 ) : (
-                    <button className={styles.followButton}>
-                        Follow
+                    <button className={styles.followButton} onClick={handleFollowUnfollow}>
+                        {following ? 'Unfollow' : 'Follow'}
                     </button>
                 )}
 
@@ -122,9 +138,9 @@ const UserHeader = () => {
 
                 {/* Showing posts here */}
                 <div className={styles.usersPost}>
-                    <UserPost likes={1200} replies={102} postImg={pfp} postTitle="At the beach!" />
-                    <UserPost likes={3200} replies={402} postImg={post1} postTitle="Suit karda!" />
-                    <UserPost likes={12020} replies={2022} postImg={post2} postTitle="Into the woods!" />
+                    <UserPost likes={1200} replies={102} postImg={defaultPic} postTitle="At the beach!" />
+                    <UserPost likes={3200} replies={402} postImg={defaultPic} postTitle="Suit karda!" />
+                    <UserPost likes={12020} replies={2022} postImg={defaultPic} postTitle="Into the woods!" />
                 </div>
             </div>
             <ToastContainer />

@@ -169,13 +169,12 @@
     width: 50%;
     cursor: pointer;
 }
-.editButton,
-.followButton {
-  background-color: #262626; /* Dark grey */
+.editButton {
+  background-color: #262626; /* Dark grey like Instagram */
   color: white;
-  padding: 6px 14px; /* Small size */
+  padding: 6px 14px; /* Smaller size */
   border: none;
-  border-radius: 8px; /* Rounded corners */
+  border-radius: 8px; /* Rounded edges */
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
@@ -184,7 +183,24 @@
   transition: background-color 0.2s ease-in-out;
 }
 
-.editButton:hover,
+.editButton:hover {
+  background-color: #3a3a3a; /* Lighter grey on hover */
+}
+
+.followButton {
+  background-color: #0095f6; /* Instagram blue */
+  color: white;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.2s ease-in-out;
+}
+
 .followButton:hover {
-  background-color: #3a3a3a; /* Slightly lighter grey on hover */
+  background-color: #0077c0; /* Darker blue on hover */
 }
