@@ -24,6 +24,7 @@ const UpdateProfilePage = () => {
     });
 
     const { handleImageChange, imgUrl, setImgUrl } = usePreviewImg();
+    const [loading, setLoading] = useState(false); // <-- Loader state
 
     useEffect(() => {
         const storedUser = JSON.parse(localStorage.getItem("user")) || {};
@@ -35,13 +36,11 @@ const UpdateProfilePage = () => {
             bio: user.bio || storedUser.bio || "",
             password: "",
         });
-    
-        // Ensure profile picture updates properly
+
         if (!imgUrl) {
             setImgUrl(user.profilePic || storedUser.profilePic || defaultPic);
         }
-    }, [user, localStorage.getItem("user")]);  // <- Also track localStorage changes
-    
+    }, [user, localStorage.getItem("user")]);
 
     const handleChange = (e) => {
         setInputs({ ...inputs, [e.target.name]: e.target.value });
@@ -49,6 +48,7 @@ const UpdateProfilePage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true); // Start loader
 
         try {
             const updatedUser = {
@@ -70,20 +70,23 @@ const UpdateProfilePage = () => {
             dispatch(updateUser(data.user)); 
             localStorage.setItem("user", JSON.stringify(data.user));
 
-            toast.success("Profile updated successfully!",{
-                autoClose : 1000
-            })
-            navigate('/')
+            toast.success("Profile updated successfully!", {
+                autoClose: 1000
+            });
+
+            setTimeout(() => {
+                setLoading(false); // Stop loader
+            }, 1000);
         } catch (err) {
-            toast.error("Failed to update profile! Image size exceeds 100 KB");
+            toast.error("Failed to update profile:",err);
+            setLoading(false); 
         }
     };
 
     return (
         <>
         <div className={styles.container}>
-          
-             <div className={styles.card}>
+            <div className={styles.card}>
                 <h2 className={styles.title}>User Profile Edit</h2>
 
                 <div className={styles.avatarContainer}>
@@ -99,7 +102,7 @@ const UpdateProfilePage = () => {
                 </div>
 
                 <form onSubmit={handleSubmit} className={styles.form}>
-                    <label>Name </label>
+                    <label>Name</label>
                     <input
                         type="text"
                         name="name"
@@ -151,12 +154,18 @@ const UpdateProfilePage = () => {
 
                     <div className={styles.buttonGroup}>
                         <button type="button" className={styles.cancelButton} onClick={() => navigate('/')}>
-                            Cancel
+                            Home
                         </button>
 
-                        <button type="submit" className={styles.submitButton}>
-                            Submit
-                        </button>
+                        {loading ? (
+                            <button type="button" className={styles.loaderButton} disabled>
+                                <span className={styles.loader}></span> {/* Loader */}
+                            </button>
+                        ) : (
+                            <button type="submit" className={styles.submitButton}>
+                                Submit
+                            </button>
+                        )}
                     </div>
                 </form>
             </div>

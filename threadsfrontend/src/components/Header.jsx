@@ -1,93 +1,95 @@
-import React, { useEffect } from "react";
-import { FaHome, FaUserCircle } from "react-icons/fa";
+import React, { useState } from "react";
+import { FaHome, FaUserCircle, FaPlusCircle, FaBars, FaTimes } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser, clearUser } from "../redux/userSlice";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CreatePostModal from "./CreatePostModal";
 import styles from "./Header.module.css";
 import logo from '../assets/logo.svg';
 
 const Header = () => {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // Initialize navigation hook
+  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  // Handle Logout
-  const handleLogout = async() => {
-    
-    try{
-    const res = await fetch('/api/users/logout',{
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })  
-    let data = await res.json();
-    if(data.error){
-      toast.error(data.error, { position: "top-center" });
-      return;
+  const handleLogout = async () => {
+    try {
+      const res = await fetch('/api/users/logout', {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+      let data = await res.json();
+      if (data.error) {
+        toast.error(data.error, { position: "top-center" });
+        return;
+      }
+      toast.success("You have logged out successfully!", {
+        position: "top-center",
+        autoClose: 1500,
+        onClose: () => {
+          dispatch(clearUser());
+          navigate("/auth");
+        },
+      });
+    } catch (err) {
+      toast.error("Network error! Please try again.", { position: "top-center" });
     }
-    toast.success("You have logged out successfully!", {
-      position: "top-center",
-      autoClose: 1500, // Delay before redirect
-      onClose: () => {
-        dispatch(clearUser()); // Remove user from Redux
-        navigate("/auth"); // Redirect to login page
-      },
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      theme: "dark",
-    });
-  }
-  catch(err){
-  console.error("Error logging out:", err.message);
-  toast.error("Network error! Please try again.", { position: "top-center" });
-  
-}
-
-  // Auto-redirect when user logs in
-  useEffect(() => {
-    if (user) {
-      navigate("/"); // Redirect to home after login
-    }
-  }, [user, navigate]); // Runs whenever user state changes
-}
+  };
 
   return (
-    <header className={styles.header}>
-      <div className={styles.logo}>
-        <img src={logo} alt="Logo" className={styles.logoImage} />
-      </div>
-      <div className={styles.homeIcon} onClick={() => navigate("/")}>
-        <FaHome size={30} className={styles.icon} />
-      </div>
-      <div className={styles.profileAndLogin}>
-        <div className={styles.profileIcon}>
-          {
-            user?(
-              <span className={styles.userName}>{user.name}</span>
-            ):(
-              <span></span>
-            )
-          }
-          <FaUserCircle size={30} className={styles.icon} />
-        </div>
-        {user ? (
-          <button className={`${styles.button} ${styles.logoutButton}`} onClick={handleLogout}>
-            Log Out
-          </button>
-        ) : (
-          <button className={`${styles.button} ${styles.loginButton}`} onClick={() => navigate("/auth")}>
-            Log In
-          </button>
-        )}
-      </div>
-      <ToastContainer />
-    </header>
-  );
-}
+    <>
+      {/* Hamburger Menu Icon */}
+      <FaBars className={styles.hamburger} onClick={() => setMenuOpen(true)} />
 
-export default Header ;
+      {/* Sidebar */}
+      <header className={`${styles.header} ${menuOpen ? styles.open : "closed"}`}>
+        {/* Close Button */}
+        <FaTimes className={styles.closeButton} onClick={() => setMenuOpen(false)} />
+
+        <div className={styles.logo}>
+          <img src={logo} alt="Logo" className={styles.logoImage} />
+        </div>
+        
+        <div className={styles.icons}>
+          <FaHome size={65} className={styles.icon} onClick={() => navigate("/")} />
+          
+          {user && (
+            <FaPlusCircle
+              size={35}
+              className={styles.createPostIcon}
+              onClick={() => setIsModalOpen(true)}
+            />
+          )}
+        </div>
+
+        <div className={styles.profileAndLogin}>
+          <div className={styles.profileIcon}>
+            {user && <span className={styles.userName}>{user.name}</span>}
+            <FaUserCircle size={65} className={styles.icon} />
+          </div>
+
+          {user ? (
+            <button className={`${styles.button} ${styles.logoutButton}`} onClick={handleLogout}>
+              Log Out
+            </button>
+          ) : (
+            <button className={`${styles.button} ${styles.loginButton}`} onClick={() => navigate("/auth")}>
+              Log In
+            </button>
+          )}
+        </div>
+      </header>
+
+      {/* Create Post Modal */}
+      {isModalOpen && <CreatePostModal closeModal={() => setIsModalOpen(false)} />}
+
+      <ToastContainer />
+    </>
+  );
+};
+
+export default Header;

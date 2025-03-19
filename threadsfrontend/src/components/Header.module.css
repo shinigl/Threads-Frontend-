@@ -1,110 +1,216 @@
-/* Reset default margin and padding */
+/* Reset default styles */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Dark Theme Styling */
-body {
- background-color: #181818;
- color: #e0e0e0; /* Light text color */
-}
-
-/* Header Styling */
+/* Sidebar (Header) */
 .header {
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 10px 20px;
-background-color: #000;
-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Subtle shadow */
+  width: 250px;
+  height: 100vh;
+  background-color: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+  box-shadow: 2px 0 10px rgba(255, 255, 255, 0.1);
+  position: fixed;
+  left: 0;
+  top: 0;
+  transition: transform 0.3s ease-in-out;
 }
 
-/* Logo Image */
+.header.closed {
+  transform: translateX(-100%);
+}
+
+/* Hamburger Menu */
+.hamburger {
+  display: none;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  cursor: pointer;
+  font-size: 28px;
+  color: white;
+}
+
+/* Logo Styling */
+.logo {
+  margin-bottom: 30px;
+}
+
 .logoImage {
-width: 40px;
-height: auto;
-cursor: pointer;
-filter: invert(1);
+  width: 60px;
+  height: auto;
+  cursor: pointer;
+  filter: invert(1);
 }
 
-/* Home Icon */
-.homeIcon {
-display: flex;
-justify-content: center;
-align-items: center;
-flex: 2;
-filter: invert(1);
+/* Navigation Icons */
+.icons {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+  align-items: center;
+  width: 100%;
 }
 
-/* Profile and Login section */
-.profileAndLogin {
-display: flex;
-align-items: center;
-justify-content: flex-end;
-}
-
-/* Profile Icon */
-.profileIcon {
-margin-right: 15px;
-cursor: pointer;
-filter: invert(1);
-display: flex;
-align-items: center;
-gap: 5px;
-}
-.userName{
- color: #000;
-}
-
-/* Icon Styling (Home and Profile) */
 .icon {
-cursor: pointer;
-transition: transform 0.3s ease-in-out;
-color: #e0e0e0; /* Light color for icons */
+  color: #e0e0e0;
+  cursor: pointer;
+  font-size: 32px; /* Increased size */
+  transition: transform 0.2s ease-in-out, background 0.3s ease;
+  padding: 15px;
+  border-radius: 10px;
 }
 
 .icon:hover {
-transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.1);
+
 }
 
-/* Premium Button Styling */
+/* Create Post Icon */
+.createPostIcon {
+  color: #00bfff;
+  transition: transform 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.createPostIcon:hover {
+  transform: scale(1.2);
+  color: #1e8fffb7;
+}
+
+/* Profile & Login */
+.profileAndLogin {
+  margin-top: auto;
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+}
+
+.profileIcon {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.userName {
+  color: #ccc;
+  font-size: 18px;
+}
+
+/* Buttons */
 .button {
-padding: 10px 20px;
-font-size: 14px;
-font-weight: bold;
-border: none;
-border-radius: 20px;
-cursor: pointer;
-transition: all 0.3s ease-in-out;
-text-transform: uppercase;
+  width: 50%;
+  padding: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition:  0.3s ease;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #3a3a3a, #5a5a5a);
+  color: white;
 }
 
-/* Login Button (Threads/Instagram Gradient) */
-.loginButton {
-background: linear-gradient(135deg, #ff512f, #dd2476);
-color: white;
-transition: 0.3s ease;
+.button:hover {
+  background: linear-gradient(135deg, #4a4a4a, #6a6a6a);
+}
+.logoutButton{
+  transition: 0.3s ease;
+  margin-top: 5px;
+}
+.closeButton{
+   display: none;
 }
 
-.loginButton:hover {
-background: linear-gradient(135deg, #ff684a, #e03689);
+/* Responsive (Small Screens) */
+@media (max-width: 768px) {
+  .header {
+    width: 200px;
+    transform: translateX(-100%);
+  }
 
+  .header.open {
+    transform: translateX(0);
+  }
+
+  .hamburger {
+    display: block;
+  }
+}
+/* Close Button */
+.closeButton {
+
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 28px;
+  cursor: pointer;
+  color: white;
+  transition: transform 0.3s ease;
 }
 
-
-
-/* Logout Button (Premium Dark Purple) */
-.logoutButton {
-background: linear-gradient(135deg, #833ab4, #c13584);
-color: white;
-
+.closeButton:hover {
+  transform: scale(1.2);
 }
 
-.logoutButton:hover {
-background: linear-gradient(135deg, #9b45b9, #d84591);
-
+/* Sidebar (Header) */
+.header {
+  width: 250px;
+  height: 100vh;
+  background-color: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+  box-shadow: 2px 0 10px rgba(255, 255, 255, 0.1);
+  position: fixed;
+  left: 0;
+  top: 0;
+  transition: transform 0.3s ease-in-out;
 }
 
+.header.closed {
+  transform: translateX(-100%);
+}
 
+/* Hamburger Menu */
+.hamburger {
+  display: none;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  cursor: pointer;
+  font-size: 28px;
+  color: white;
+}
+
+/* Responsive (Small Screens) */
+@media (max-width: 768px) {
+  .header {
+    width: 200px;
+    transform: translateX(-100%);
+  }
+
+  .header.open {
+    transform: translateX(0);
+  }
+
+  .hamburger {
+    display: block;
+  }
+  .logoutButton{
+    width: 100%;
+  }
+  .closeButton{
+    display: block;
+    font-size: 14px;
+  }
+}
