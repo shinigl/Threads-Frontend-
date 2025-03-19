@@ -40,6 +40,7 @@ const Login = () => {
       const data = await res.json();
       console.log(data);
 
+
       if (data.error) {
         toast.error(data.error, { position: "top-right" });
         return;
@@ -51,12 +52,15 @@ const Login = () => {
       localStorage.setItem("user-threads", JSON.stringify(data));
 
 
-      // Show success message & redirect after 1.5s
       toast.success("Login successful! Redirecting to Home page", {
         position: "top-right",
-        autoClose: 1500,
-        onClose: () => navigate("/", { replace: true }),
+        autoClose: 500,
       });
+
+      setTimeout(()=>{
+
+        navigate(0);
+      },1000)
 
     } catch (error) {
       console.error("Error logging in:", error.message);

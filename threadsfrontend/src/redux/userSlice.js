@@ -19,6 +19,7 @@ const userSlice = createSlice({
     },
     clearUser: () => {
       localStorage.removeItem("user-threads");
+      localStorage.removeItem("user");
       return null;
     },
   },

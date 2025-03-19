@@ -1,0 +1,42 @@
+.errorContainer {
+    text-align: center;
+    padding: 50px;
+    color: #333;
+}
+
+.errorImg {
+    width: 300px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.errorTitle {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.errorMessage {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.homeBtn {
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.homeBtn:hover {
+    opacity: 0.8;
+}

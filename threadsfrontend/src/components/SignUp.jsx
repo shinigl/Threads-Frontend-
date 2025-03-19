@@ -6,6 +6,7 @@ import styles from "./SignUp.module.css";
 import logo from "../assets/logo.svg";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; 
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const [inputs, setInputs] = useState({
@@ -16,7 +17,7 @@ const SignUp = () => {
   });
 
   const dispatch = useDispatch();
-  
+  const navigate = useNavigate()
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -44,11 +45,16 @@ const SignUp = () => {
       dispatch(setUser(data));
 
       // Show success message & then navigation is handled by AppContent's useEffect
-      toast.success("Signup successful! Redirecting to Home", {
+      toast.success("Signup successful!", {
         position: "top-right",
-        autoClose: 1500,
-        theme : "dark"
+        autoClose: 1000,
+        theme : "dark",
       });
+      setTimeout(()=>{
+
+        navigate(0);
+      },1000)
+
       
     } catch (error) {
       console.error("Error signing up:", error.message);

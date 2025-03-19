@@ -169,3 +169,22 @@
     width: 50%;
     cursor: pointer;
 }
+.editButton,
+.followButton {
+  background-color: #262626; /* Dark grey */
+  color: white;
+  padding: 6px 14px; /* Small size */
+  border: none;
+  border-radius: 8px; /* Rounded corners */
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.editButton:hover,
+.followButton:hover {
+  background-color: #3a3a3a; /* Slightly lighter grey on hover */
+}

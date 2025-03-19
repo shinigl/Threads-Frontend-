@@ -9,6 +9,7 @@ import store from './redux/store';
 import { selectUser } from './redux/userSlice';
 import { ToastContainer } from 'react-toastify';
 import UpdateProfilePage from './pages/UpdateProfilePage';
+import ErrorPage from './pages/ErrorPage';
 
 const AppContent = () => {
   const user = useSelector(selectUser); // User data from Redux store
@@ -33,6 +34,9 @@ const AppContent = () => {
     {
       path : "/update",
       element: user? <UpdateProfilePage/>: <Navigate to="/auth" />,
+    },{
+      path: "/error",
+      element : <ErrorPage/>
     }
   ]);
 
