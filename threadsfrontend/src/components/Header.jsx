@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import CreatePostModal from "./CreatePostModal";
 import styles from "./Header.module.css";
 import logo from '../assets/logo.svg';
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const user = useSelector(selectUser);
@@ -53,10 +54,10 @@ const Header = () => {
         <div className={styles.logo}>
           <img src={logo} alt="Logo" className={styles.logoImage} />
         </div>
-        
+
         <div className={styles.icons}>
           <FaHome size={65} className={styles.icon} onClick={() => navigate("/")} />
-          
+
           {user && (
             <FaPlusCircle
               size={35}
@@ -69,8 +70,11 @@ const Header = () => {
         <div className={styles.profileAndLogin}>
           <div className={styles.profileIcon}>
             {user && <span className={styles.userName}>{user.name}</span>}
-            <FaUserCircle size={65} className={styles.icon} />
+            <Link to={`/${user.username}`} className={styles.profileLink}>
+              <FaUserCircle size={65} className={styles.icon} />
+            </Link>
           </div>
+
 
           {user ? (
             <button className={`${styles.button} ${styles.logoutButton}`} onClick={handleLogout}>

@@ -34,10 +34,12 @@ const AppContent = () => {
     {
       path : "/update",
       element: user? <UpdateProfilePage/>: <Navigate to="/auth" />,
-    },{
+    },
+    {
       path: "/error",
       element : <ErrorPage/>
-    }
+    },
+    
   ]);
 
   return <RouterProvider router={routes} />;
