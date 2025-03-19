@@ -1,12 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from './Header'
-import UserHeader from './UserHeader'
+
 
 const Home = () => {
+  const [posts,setPosts] = useState([]);
+  useEffect(()=>{
+    const getFeedPosts = async()=>{
+      try{
+        const res = await fetch("/api/posts/feed");
+        const data = await res.json();
+        console.log(data);
+      }
+      catch(err){
+        console.error(err);
+      }
+    }
+    getFeedPosts();
+  },[])
   return (
     <>
+    
     <Header/>
-    {/* <UserHeader/> */}
+    
     </>
   )
 }

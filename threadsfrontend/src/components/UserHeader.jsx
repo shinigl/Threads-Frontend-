@@ -68,6 +68,38 @@ const UserHeader = () => {
     getUser();
   }, [username, navigate, currentUser]);
 
+  const handleFollowUnfollow = async () => {
+    if (!currentUser) {
+        toast.error("You need to log in first!");
+        return;
+    }
+
+    //Optimistically update UI before waiting for backend
+    setFollowing((prevFollowing) => !prevFollowing);
+    const originalState = following; // Store original state in case of error
+
+    try {
+        const res = await fetch(`/api/users/follow/${user._id}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId: user._id }), 
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            throw new Error(data.error || 'Something went wrong!');
+        }
+
+        // toast.success(following ? 'Unfollowed!' : 'Followed!', { autoClose: 500 });
+    } catch (err) {
+        setFollowing(originalState); // Revert if an error occurs
+        toast.error('Error updating follow status.');
+    }
+};
+
+
+
   if (loading) return <Loader />; 
 
   return (
@@ -111,7 +143,7 @@ const UserHeader = () => {
             Update Profile
           </button>
         ) : (
-          <button className={styles.followButton} onClick={() => setFollowing(!following)}>
+          <button className={styles.followButton} onClick={handleFollowUnfollow}>
             {following ? "Unfollow" : "Follow"}
           </button>
         )}

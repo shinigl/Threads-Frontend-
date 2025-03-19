@@ -4,9 +4,9 @@ import { updateUser } from "../redux/userSlice";
 import styles from "./UpdateProfilePage.module.css";
 import defaultPic from '../assets/defaultUserPic.webp';
 import usePreviewImg from "../hooks/usePreviewImg";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { FaHome, FaCheck } from "react-icons/fa";
 
 const UpdateProfilePage = () => {
     const dispatch = useDispatch();
@@ -24,7 +24,7 @@ const UpdateProfilePage = () => {
     });
 
     const { handleImageChange, imgUrl, setImgUrl } = usePreviewImg();
-    const [loading, setLoading] = useState(false); // <-- Loader state
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const storedUser = JSON.parse(localStorage.getItem("user")) || {};
@@ -48,7 +48,7 @@ const UpdateProfilePage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true); // Start loader
+        setLoading(true);
 
         try {
             const updatedUser = {
@@ -70,21 +70,28 @@ const UpdateProfilePage = () => {
             dispatch(updateUser(data.user)); 
             localStorage.setItem("user", JSON.stringify(data.user));
 
-            toast.success("Profile updated successfully!", {
-                autoClose: 1000
+            Swal.fire({
+                icon: "success",
+                title: "Profile Updated!",
+                text: "Your profile has been updated successfully.",
+                timer: 1500,
+                showConfirmButton: false,
+            }).then(() => {
+                navigate(-1); // Redirect to previous page
             });
 
-            setTimeout(() => {
-                setLoading(false); // Stop loader
-            }, 1000);
+            setLoading(false);
         } catch (err) {
-            toast.error("Failed to update profile:",err);
-            setLoading(false); 
+            Swal.fire({
+                icon: "error",
+                title: "Update Failed!",
+                text: "Something went wrong while updating your profile.",
+            });
+            setLoading(false);
         }
     };
 
     return (
-        <>
         <div className={styles.container}>
             <div className={styles.card}>
                 <h2 className={styles.title}>User Profile Edit</h2>
@@ -154,24 +161,22 @@ const UpdateProfilePage = () => {
 
                     <div className={styles.buttonGroup}>
                         <button type="button" className={styles.cancelButton} onClick={() => navigate('/')}>
-                            Home
+                            <FaHome size={28} />
                         </button>
 
                         {loading ? (
                             <button type="button" className={styles.loaderButton} disabled>
-                                <span className={styles.loader}></span> {/* Loader */}
+                                <span className={styles.loader}></span>
                             </button>
                         ) : (
                             <button type="submit" className={styles.submitButton}>
-                                Submit
+                                <FaCheck size={28} />
                             </button>
                         )}
                     </div>
                 </form>
             </div>
         </div>
-        <ToastContainer />
-        </>
     );
 };
 
