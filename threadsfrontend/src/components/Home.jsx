@@ -5,7 +5,7 @@ import UserHeader from './UserHeader'
 const Home = () => {
   return (
     <>
-     <Header />
+    <Header/>
     <UserHeader/>
     </>
   )

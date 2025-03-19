@@ -12,13 +12,6 @@ import UpdateProfilePage from './pages/UpdateProfilePage';
 
 const AppContent = () => {
   const user = useSelector(selectUser); // User data from Redux store
-    // Check localStorage if Redux has no user
-    if (!user) {
-      const storedUser = localStorage.getItem("user");
-      if (storedUser) {
-        user = JSON.parse(storedUser);
-      }
-    }
 
   const routes = createBrowserRouter([
     {

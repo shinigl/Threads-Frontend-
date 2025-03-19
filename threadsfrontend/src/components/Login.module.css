@@ -109,5 +109,27 @@
     color: #fff;
   }
   
-  /* Other styles remain the same as before */
+  .passwordWrapper {
+    position: relative; /* Ensure relative positioning for absolute child */
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+  
+  .passwordWrapper input {
+    width: 100%;
+    padding-right: 40px; /* Add padding so text doesn't overlap icon */
+  }
+  
+  .eyeIcon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
+    font-size: 20px;
+    transition: color 0.3s;
+  }
+  
   

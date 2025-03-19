@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "../redux/userSlice";
 import styles from "./UpdateProfilePage.module.css";
+import defaultPic from '../assets/defaultUserPic.webp'
+
 
 const UpdateProfilePage = () => {
   const dispatch = useDispatch();
@@ -22,7 +24,7 @@ const UpdateProfilePage = () => {
   });
 
   const [profilePic, setProfilePic] = useState(user.profilePic || storedUser.profilePic || null);
-  const defaultAvatar = "https://via.placeholder.com/100"; // Default avatar image
+  const defaultAvatar = defaultPic // Default avatar image
 
   useEffect(() => {
     // If Redux updates, sync state
@@ -63,6 +65,7 @@ const UpdateProfilePage = () => {
   };
 
   return (
+    <>
     <div className={styles.container}>
       <div className={styles.card}>
         <h2 className={styles.title}>User Profile Edit</h2>
@@ -146,6 +149,7 @@ const UpdateProfilePage = () => {
         </form>
       </div>
     </div>
+    </>
   );
 };
 

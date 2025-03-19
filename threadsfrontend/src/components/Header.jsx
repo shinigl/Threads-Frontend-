@@ -14,7 +14,20 @@ const Header = () => {
   const navigate = useNavigate(); // Initialize navigation hook
 
   // Handle Logout
-  const handleLogout = () => {
+  const handleLogout = async() => {
+    
+    try{
+    const res = await fetch('/api/users/logout',{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })  
+    let data = await res.json();
+    if(data.error){
+      toast.error(data.error, { position: "top-center" });
+      return;
+    }
     toast.success("You have logged out successfully!", {
       position: "top-center",
       autoClose: 1500, // Delay before redirect
@@ -28,7 +41,12 @@ const Header = () => {
       draggable: true,
       theme: "dark",
     });
-  };
+  }
+  catch(err){
+  console.error("Error logging out:", err.message);
+  toast.error("Network error! Please try again.", { position: "top-center" });
+  
+}
 
   // Auto-redirect when user logs in
   useEffect(() => {
@@ -36,6 +54,7 @@ const Header = () => {
       navigate("/"); // Redirect to home after login
     }
   }, [user, navigate]); // Runs whenever user state changes
+}
 
   return (
     <header className={styles.header}>
@@ -69,6 +88,6 @@ const Header = () => {
       <ToastContainer />
     </header>
   );
-};
+}
 
-export default Header;
+export default Header ;
