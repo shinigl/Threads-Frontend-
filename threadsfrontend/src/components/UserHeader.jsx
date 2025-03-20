@@ -8,20 +8,22 @@ import { useSelector } from "react-redux";
 import styles from "./UserHeader.module.css";
 import defaultPic from "../assets/defaultUserPic.webp";
 import logo from "../assets/logo.svg";
-import UserPost from "./UserPost";
+// import UserPost from "./UserPost";
 import { selectUser } from "../redux/userSlice";
+import Posts from "./Posts";
+
 
 // ✅ Loader Component (Framer Motion)
 const Loader = () => {
   return (
-    <motion.div 
+    <motion.div
       className={styles.loader}
       initial={{ opacity: 0, scale: 0.5 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.5 }}
       transition={{ duration: 0.5, ease: "easeInOut" }}
     >
-      <motion.div 
+      <motion.div
         className={styles.spinner}
         animate={{ rotate: 360 }}
         transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
@@ -38,7 +40,8 @@ const UserHeader = () => {
   const currentUser = useSelector(selectUser);
   const [following, setFollowing] = useState(false);
   const [dropDown, setDropDown] = useState(false);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
+  const [posts, setPosts] = useState([]);
   const dropdownRef = useRef(null);
 
   useEffect(() => {
@@ -65,13 +68,31 @@ const UserHeader = () => {
       }
     };
 
+    const getPosts = async () => {
+      try {
+        const res = await fetch(`/api/posts/user/${username}`);
+        const data = await res.json();
+        console.log(data);
+        setPosts(data);
+        if (data.error) {
+          toast.error(data.error);
+          return;
+        }
+
+      } catch (err) {
+        toast.error('Failed to load posts!');
+        setPosts([]);
+      }
+    }
     getUser();
+    getPosts();
+
   }, [username, navigate, currentUser]);
 
   const handleFollowUnfollow = async () => {
     if (!currentUser) {
-        toast.error("You need to log in first!");
-        return;
+      toast.error("You need to log in first!");
+      return;
     }
 
     //Optimistically update UI before waiting for backend
@@ -79,28 +100,28 @@ const UserHeader = () => {
     const originalState = following; // Store original state in case of error
 
     try {
-        const res = await fetch(`/api/users/follow/${user._id}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ userId: user._id }), 
-        });
+      const res = await fetch(`/api/users/follow/${user._id}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: user._id }),
+      });
 
-        const data = await res.json();
+      const data = await res.json();
 
-        if (!res.ok) {
-            throw new Error(data.error || 'Something went wrong!');
-        }
+      if (!res.ok) {
+        throw new Error(data.error || 'Something went wrong!');
+      }
 
-        // toast.success(following ? 'Unfollowed!' : 'Followed!', { autoClose: 500 });
+      // toast.success(following ? 'Unfollowed!' : 'Followed!', { autoClose: 500 });
     } catch (err) {
-        setFollowing(originalState); // Revert if an error occurs
-        toast.error('Error updating follow status.');
+      setFollowing(originalState); // Revert if an error occurs
+      toast.error('Error updating follow status.');
     }
-};
+  };
 
 
 
-  if (loading) return <Loader />; 
+  if (loading) return <Loader />;
 
   return (
     <>
@@ -160,9 +181,30 @@ const UserHeader = () => {
         </div>
 
         <div className={styles.usersPost}>
-          <UserPost likes={1200} replies={102} postImg={defaultPic} postTitle="At the beach!" />
-          <UserPost likes={3200} replies={402} postImg={defaultPic} postTitle="Suit karda!" />
-          <UserPost likes={12020} replies={2022} postImg={defaultPic} postTitle="Into the woods!" />
+          {
+            posts.length === 0 ? (
+              <h1 className={styles.fallbackHeading} >No posts here !</h1>
+            ) :
+              (
+                posts.map((post) => {
+                  return (
+                    
+                    <Posts
+                    key={post._id}
+                    postId={post._id}
+                    postedBy={post.postedBy}
+                    profilePic={post.profilePic}
+                    text={post.text}
+                    img={post.img}
+                    likes={post.likes}
+                    replies={post.replies}
+                   
+                  />
+                    
+                  )
+                }).reverse()
+              )
+          }
         </div>
       </div>
       <ToastContainer />

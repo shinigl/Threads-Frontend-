@@ -41,7 +41,7 @@ const Home = () => {
           <div className={styles.loader}></div>
         ) : posts.length === 0 ? (
           <div className={styles.fallback}>
-            <p>Follow some users to see posts. 😒</p>
+            <p>Wow, it's lonely in here 🥶 Either you haven’t followed anyone, or your followed ones have taken a vow of silence. 📵</p>
           </div>
         ) : (
           <div className={styles.postsContainer}>

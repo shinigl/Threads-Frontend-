@@ -182,24 +182,147 @@
 .commentModal button:hover {
   background: var(--button-hover);
 }
-
 /* Replies Section */
 .repliesSection {
   margin-top: 15px;
 }
 
 .repliesSection h4 {
-  color: var(--text-color);
+  color: #ffffff;
   font-size: 16px;
   margin-bottom: 5px;
+  font-weight: bold;
 }
 
+/* Reply Container */
+.replyContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: #1e1e1e;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #333;
+  transition: background 0.3s ease-in-out;
+}
+
+.replyContainer:hover {
+  background: #292929;
+}
+
+/* Profile Picture */
+.replyProfilePic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: 0px 0px 8px rgba(237, 227, 227, 0.2);
+  transition: transform 0.2s ease-in-out;
+}
+
+.replyProfilePic:hover {
+  transform: scale(1.1);
+}
+
+/* Reply Content */
+.replyContent {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* Username */
+.replyUserName {
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+  font-size: 15px;
+  transition: 0.3s ease;
+}
+
+.replyUserName:hover {
+ 
+  color: #61b2ff;
+}
+
+/* Reply Text */
 .replyText {
-  background: var(--input-bg);
-  padding: 8px;
-  border-radius: 5px;
+  background: #2b2b2b;
+  padding: 10px;
+  border-radius: 6px;
   font-size: 14px;
-  color: var(--secondary-text);
+  color: #cccccc;
   margin-bottom: 5px;
-  border: 1px solid var(--border-color);
+  border: 1px solid #444;
+  transition: background 0.3s ease-in-out;
+}
+
+.replyText:hover {
+  background: #333;
+}
+
+.deleteIcon {
+  font-size: 18px;
+  color: #888;
+  transition: color 0.2s ease-in-out;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.deleteIcon:hover {
+  color: rgba(242, 65, 65, 0.776);
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: black;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 300px;
+}
+
+.modal p {
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.deleteButton {
+  background: red;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.deleteButton:hover {
+  background: darkred;
+}
+
+.cancelButton {
+  background: gray;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cancelButton:hover {
+  background: darkgray;
 }
