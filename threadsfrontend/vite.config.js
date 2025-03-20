@@ -6,13 +6,19 @@ export default defineConfig({
   optimizeDeps: {
     include: ['@reduxjs/toolkit', 'react-redux'], 
   },
-  server :{
-    proxy : { //Prevention of CORS error
-      "/api":{
-        target : "http://localhost:3001",
-        changeOrigin : true ,
-        secure : false
-      },
-    },
+  build: {
+    outDir: 'dist', 
   },
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://localhost:3001",
+        changeOrigin: true,
+        secure: false
+      }
+    }
+  },
+  define: {
+    "process.env": {}, // Helps avoid issues with environment variables
+  }
 });
