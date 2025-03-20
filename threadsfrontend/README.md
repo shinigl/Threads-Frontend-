@@ -14,7 +14,7 @@ This is the frontend of a Threads clone, built using modern web technologies to 
 ## Tech Stack
 - **Frontend Framework:** React.js
 - **Styling:** CSS Modules
-- **API Calls:** Axios
+- **API Calls:** fetch
 - **Routing:** React Router DOM
 
 
