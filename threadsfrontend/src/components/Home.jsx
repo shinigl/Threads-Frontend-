@@ -57,7 +57,7 @@ const Home = () => {
                 replies={post.replies}
                
               />
-            ))}
+            )).reverse()}
           </div>
         )}
       </div>

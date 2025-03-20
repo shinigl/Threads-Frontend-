@@ -1,130 +1,205 @@
 /* Dark Theme Styles */
 :root {
-    --background-color: #1a1a1a;
-    --card-bg: #252525;
-    --text-color: #e0e0e0;
-    --secondary-text: #b3b3b3;
-    --border-color: #333;
-    --icon-color: #b3b3b3;
-    --icon-hover: #e0245e;
-  }
-  
+  --background-color: #1a1a1a;
+  --card-bg: #252525;
+  --text-color: #e0e0e0;
+  --secondary-text: #b3b3b3;
+  --border-color: #333;
+  --icon-color: #b3b3b3;
+  --icon-hover: #e0245e;
+  --input-bg: #333;
+  --input-border: #444;
+  --button-bg: #e0245e;
+  --button-hover: #ff3b6f;
+}
+
+/* Post Container */
+.postContainer {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+/* Post Card */
+.postCard {
+  width: 100%;
+  max-width: 650px;
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0px 2px 10px rgba(255, 255, 255, 0.05);
+  padding: 15px;
+  margin-bottom: 5px;
+  transition: 0.3s ease-in-out;
+  border: 1px solid var(--border-color);
+}
+
+.postCard:hover {
+  box-shadow: 0px 4px 15px rgba(255, 255, 255, 0.08);
+}
+
+/* Post Header */
+.postHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.profilePic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+  border: 2px solid var(--border-color);
+}
+
+.userInfo {
+  display: flex;
+  width: 90%;
+  justify-content: space-between;
+}
+
+.userName {
+  font-weight: bold;
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+.userNameLink {
+  text-decoration: none;
+}
+
+.userName:hover {
+  color: #8b8a8a;
+}
+
+/* Post Content */
+.text {
+  font-size: 15px;
+  color: var(--text-color);
+  margin: 10px 0;
+}
+
+.image {
+  width: 100%;
+  border-radius: 8px;
+  margin-top: 10px;
+  max-height: 400px;
+  object-fit: cover;
+  border: 1px solid var(--border-color);
+}
+
+.createdOn {
+  font-size: 10px;
+  color: #636262;
+}
+
+/* Post Footer */
+.postFooter {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  padding: 10px 0;
+  margin-top: 10px;
+  border-top: 1px solid var(--border-color);
+}
+
+.icon {
+  font-size: 18px;
+  color: var(--icon-color);
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.icon:hover {
+  color: var(--icon-hover);
+}
+
+/* Post Stats */
+.postStats {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--secondary-text);
+  margin-top: 5px;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
   .postContainer {
-    display: flex;
-    justify-content: center;
-    padding: 10px;
-    /* background-color: var(--background-color); */
+      max-width: 90%;
+      margin: 0 auto;
+      margin-top: 35px;
   }
-  
-  .postCard {
-    width: 100%;
-    max-width: 650px;
-    background: var(--card-bg);
-    border-radius: 12px;
-    box-shadow: 0px 2px 10px rgba(255, 255, 255, 0.05);
-    padding: 15px;
-    margin-bottom: 5px;
-    transition: 0.3s ease-in-out;
-    border: 1px solid var(--border-color);
-  }
-  
-  .postCard:hover {
-    box-shadow: 0px 4px 15px rgba(255, 255, 255, 0.08);
-  }
-  
-  /* Post Header */
-  .postHeader {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
-  .profilePic {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 10px;
-    border: 2px solid var(--border-color);
-  }
-  
-  .userInfo {
-    display: flex;
-    width: 90%;
-    justify-content: space-between;
-  }
-  
-  .userName {
-    font-weight: bold;
-    font-size: 14px;
-    color: var(--text-color);
-  }
-  
-  /* Post Content */
-  .text {
-    font-size: 15px;
-    color: var(--text-color);
-    margin: 10px 0;
-  }
-  
-  .image {
-    width: 100%;
-    border-radius: 8px;
-    margin-top: 10px;
-    max-height: 400px;
-    object-fit: cover;
-    border: 1px solid var(--border-color);
-  }
-  .createdOn{
-    font-size: 10px;
-    color: #636262;
-  }
-  /* Post Footer */
-  .postFooter {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    padding: 10px 0;
-    margin-top: 10px;
-    border-top: 1px solid var(--border-color);
-  }
-  .userNameLink{
-    text-decoration: none;
-   
+}
 
-  }
-  .userName{
-    transition: 0.3s ease;
-  }
-  .userName:hover{
-     color: #8b8a8a;
-  }
-  
-  .icon {
-    font-size: 18px;
-    color: var(--icon-color);
-    cursor: pointer;
-    transition: 0.3s ease-in-out;
-    cursor: pointer;
-  }
-  
-  .icon:hover {
-    color: var(--icon-hover);
-  }
-  
-  /* Post Stats */
-  .postStats {
-    display: flex;
-    justify-content: space-between;
-    font-size: 13px;
-    color: var(--secondary-text);
-    margin-top: 5px;
-  }
+/* ================== Comment Box Styling ================== */
+.commentModal {
+  background: var(--card-bg);
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  margin-top: 15px;
+  transition: all 0.3s ease-in-out;
+}
 
-  @media screen and (max-width: 768px) {
-    .postContainer{
-        max-width: 90%;
-        margin: 0 auto;;
-        margin-top: 35px;
-    }
-  }
+/* Hidden state for the comment box */
+.commentModal.hidden {
+  display: none;
+}
+
+/* Reply Input Field */
+.commentModal input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  color: var(--text-color);
+  font-size: 14px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.commentModal input:focus {
+  border-color: var(--icon-hover);
+}
+
+/* Reply Button */
+.commentModal button {
+  margin-top: 10px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  background: var(--button-bg);
+  color: white;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.commentModal button:hover {
+  background: var(--button-hover);
+}
+
+/* Replies Section */
+.repliesSection {
+  margin-top: 15px;
+}
+
+.repliesSection h4 {
+  color: var(--text-color);
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.replyText {
+  background: var(--input-bg);
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 14px;
+  color: var(--secondary-text);
+  margin-bottom: 5px;
+  border: 1px solid var(--border-color);
+}
