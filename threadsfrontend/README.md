@@ -1,12 +1,20 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Threads Clone - Frontend
 
-Currently, two official plugins are available:
+## Overview
+This is the frontend of a Threads clone, built using modern web technologies to provide a seamless user experience similar to the popular social platform.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
+- User authentication (Login/Register)
+- Post creation and deletion
+- Like and comment functionality
+- Follow and unfollow users
+- Responsive UI for mobile and desktop
 
-## Expanding the ESLint configuration
+## Tech Stack
+- **Frontend Framework:** React.js
+- **Styling:** CSS Modules
+- **API Calls:** Axios
+- **Routing:** React Router DOM
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
