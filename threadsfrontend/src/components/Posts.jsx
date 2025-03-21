@@ -21,6 +21,7 @@ const Posts = ({ postId, postedBy, profilePic, text, img }) => {
   const [replies, setReplies] = useState([]);
   const [replyText, setReplyText] = useState("");
   const [deleteModal, setDeleteModal] = useState(false);
+  const [deleteCommentModal, setDeleteCommentModal] = useState(null);
 
   useEffect(() => {
     const fetchPostData = async () => {
@@ -107,7 +108,6 @@ const Posts = ({ postId, postedBy, profilePic, text, img }) => {
   };
 
   const handleDeletePost = async () => {
-
     try {
       setDeleteModal(false);
       const res = await fetch(`/api/posts/${postId}`, {
@@ -119,18 +119,37 @@ const Posts = ({ postId, postedBy, profilePic, text, img }) => {
 
       if (res.ok) {
         toast.success("Post deleted successfully!", {
-          autoClose: 500
-          
+          autoClose: 500,
         });
         setTimeout(() => {
-            navigate(0)
+          navigate(0);
         }, 1000);
-
       } else {
         toast.error("Failed to delete post");
       }
     } catch (err) {
       toast.error("Error deleting post");
+    }
+  };
+
+  const handleDeleteComment = async (commentId) => {
+    try {
+      const res = await fetch(`/api/posts/reply/${postId}/${commentId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${user?.token}`,
+        },
+      });
+
+      if (res.ok) {
+        toast.success("Comment deleted successfully!", { autoClose: 500 });
+        setReplies((prev) => prev.filter((reply) => reply._id !== commentId));
+        setDeleteCommentModal(null);
+      } else {
+        toast.error("Failed to delete comment");
+      }
+    } catch (err) {
+      toast.error("Error deleting comment");
     }
   };
 
@@ -152,14 +171,19 @@ const Posts = ({ postId, postedBy, profilePic, text, img }) => {
             </Link>
             {postOwner.createdAt && (
               <span className={styles.createdOn}>
-                {formatDistanceToNow(parseISO(postOwner.createdAt), { addSuffix: true })}
+                {formatDistanceToNow(parseISO(postOwner.createdAt), {
+                  addSuffix: true,
+                })}
               </span>
             )}
           </div>
 
-          {/* Show delete button only if the logged-in user is the post owner */}
           {loggedInUserId === postedBy && (
-            <FaTrash className={styles.deleteIcon} onClick={() => setDeleteModal(true)} style={{ cursor: "pointer", color: "red" }} />
+            <FaTrash
+              className={styles.deleteIcon}
+              onClick={() => setDeleteModal(true)}
+              style={{ cursor: "pointer", color: "red" }}
+            />
           )}
         </div>
 
@@ -180,7 +204,10 @@ const Posts = ({ postId, postedBy, profilePic, text, img }) => {
               transition: "color 0.2s ease-in-out",
             }}
           />
-          <FaComment className={styles.icon} onClick={() => setModal((prev) => !prev)} />
+          <FaComment
+            className={styles.icon}
+            onClick={() => setModal((prev) => !prev)}
+          />
         </div>
 
         {/* Like & Reply Count */}
@@ -198,29 +225,48 @@ const Posts = ({ postId, postedBy, profilePic, text, img }) => {
               onChange={(e) => setReplyText(e.target.value)}
               className={styles.commentInput}
             />
-            <button onClick={handleReply} className={styles.commentButton}>Comment</button>
+            <button onClick={handleReply} className={styles.commentButton}>
+              Comment
+            </button>
 
             {/* Display Replies */}
             <div className={styles.repliesSection}>
-              <h4>Replies:</h4>
               {replies.length > 0 ? (
                 replies.map((r, index) => (
                   <div key={index} className={styles.replyContainer}>
-                    <Link to={`/${r.commentedBy?.username || "#"}`}>
+                    <Link to={`/${r.username || "#"}`}>
                       <img
-                        src={r.commentedBy?.profilePic || defaultPic}
-                        alt={r.commentedBy?.username || "User"}
+                        src={r.userProfilePic || defaultPic}
+                        alt={r.username || "User"}
                         className={styles.replyProfilePic}
                       />
                     </Link>
                     <div className={styles.replyContent}>
-                      <Link to={`/${r.commentedBy?.username || "#"}`} className={styles.replyUserName}>
-                        {r.commentedBy?.username || "Unknown User"}
-                      </Link>
+                      <div className={styles.replyHeader}>
+                        <Link
+                          to={`/${r.username || "#"}`}
+                          className={styles.replyUserName}
+                        >
+                          {r.username || "Unknown User"}
+                        </Link>
+                        {loggedInUserId === r.userId && (
+                          <FaTrash
+                            className={styles.deleteCommentIcon}
+                            onClick={() => setDeleteCommentModal(r._id)}
+                          />
+                        )}
+                      </div>
                       <p className={styles.replyText}>{r.text}</p>
+                      {r.createdAt ? (
+                        <span className={styles.replyTimestamp}>
+                          {formatDistanceToNow(parseISO(r.createdAt), {
+                            addSuffix: true,
+                          })}
+                        </span>
+                      ) : (
+                        <span className={styles.replyTimestamp}>Just now</span>
+                      )}
                     </div>
-
-
                   </div>
                 ))
               ) : (
@@ -230,13 +276,42 @@ const Posts = ({ postId, postedBy, profilePic, text, img }) => {
           </div>
         )}
 
-
         {deleteModal && (
           <div className={styles.modalOverlay}>
             <div className={styles.modal}>
               <p>Are you sure you want to delete this post?</p>
-              <button onClick={handleDeletePost} className={styles.deleteButton}>Yes</button>
-              <button onClick={() => setDeleteModal(false)} className={styles.cancelButton}>No</button>
+              <button
+                onClick={handleDeletePost}
+                className={styles.deleteButton}
+              >
+                Yes
+              </button>
+              <button
+                onClick={() => setDeleteModal(false)}
+                className={styles.cancelButton}
+              >
+                No
+              </button>
+            </div>
+          </div>
+        )}
+
+        {deleteCommentModal && (
+          <div className={styles.modalOverlay}>
+            <div className={styles.modal}>
+              <p>Are you sure you want to delete this comment?</p>
+              <button
+                onClick={() => handleDeleteComment(deleteCommentModal)}
+                className={styles.deleteButton}
+              >
+                Yes
+              </button>
+              <button
+                onClick={() => setDeleteCommentModal(null)}
+                className={styles.cancelButton}
+              >
+                No
+              </button>
             </div>
           </div>
         )}
