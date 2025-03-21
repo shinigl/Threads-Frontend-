@@ -1,9 +1,8 @@
 {
-    "rewrites": [
-      { "source": "/api/(.*)", "destination": "http://localhost:3001/api/$1" }
-    ],
-    "routes": [
-      { "src": "/(.*)", "dest": "/index.html" }
-    ]
-  }
-  
+  "builds": [
+    {
+      "src": "threadsfrontend/index.html",
+      "use": "@vercel/static"
+    }
+  ]
+}
