@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { FaInstagram } from "react-icons/fa";
+import { FaInstagram, FaHome, FaPlusCircle } from "react-icons/fa"; 
 import { BsThreeDots, BsArrowLeft } from "react-icons/bs";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
@@ -8,12 +8,11 @@ import { useSelector } from "react-redux";
 import styles from "./UserHeader.module.css";
 import defaultPic from "../assets/defaultUserPic.webp";
 import logo from "../assets/logo.svg";
-// import UserPost from "./UserPost";
 import { selectUser } from "../redux/userSlice";
 import Posts from "./Posts";
+import CreatePostModal from "./CreatePostModal"; 
 
-
-// ✅ Loader Component (Framer Motion)
+// Loader Component (Framer Motion)
 const Loader = () => {
   return (
     <motion.div
@@ -42,6 +41,7 @@ const UserHeader = () => {
   const [dropDown, setDropDown] = useState(false);
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false); // State for CreatePostModal
   const dropdownRef = useRef(null);
 
   useEffect(() => {
@@ -78,15 +78,13 @@ const UserHeader = () => {
           toast.error(data.error);
           return;
         }
-
       } catch (err) {
-        toast.error('Failed to load posts!');
+        toast.error("Failed to load posts!");
         setPosts([]);
       }
-    }
+    };
     getUser();
     getPosts();
-
   }, [username, navigate, currentUser]);
 
   const handleFollowUnfollow = async () => {
@@ -95,43 +93,54 @@ const UserHeader = () => {
       return;
     }
 
-    //Optimistically update UI before waiting for backend
     setFollowing((prevFollowing) => !prevFollowing);
-    const originalState = following; // Store original state in case of error
+    const originalState = following;
 
     try {
       const res = await fetch(`/api/users/follow/${user._id}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId: user._id }),
       });
 
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.error || 'Something went wrong!');
+        throw new Error(data.error || "Something went wrong!");
       }
-
-      // toast.success(following ? 'Unfollowed!' : 'Followed!', { autoClose: 500 });
     } catch (err) {
-      setFollowing(originalState); // Revert if an error occurs
-      toast.error('Error updating follow status.');
+      setFollowing(originalState);
+      toast.error("Error updating follow status.");
     }
   };
-
-
 
   if (loading) return <Loader />;
 
   return (
     <>
-      {/* ✅ Header Section */}
+      {/* Header Section */}
       <div className={styles.header}>
         <img src={logo} alt="Logo" className={styles.logo} />
+        <div className={styles.headerIcons}>
+          <FaHome
+            size={30}
+            className={styles.icon}
+            onClick={() => navigate("/")}
+            title="Home"
+          />
+          {currentUser && (
+            <FaPlusCircle
+              size={30}
+              className={styles.icon}
+              onClick={() => setIsModalOpen(true)}
+              title="Create Post"
+            />
+          )}
+        </div>
         <BsArrowLeft className={styles.backButton} onClick={() => navigate(-1)} />
       </div>
 
-      {/* ✅ Main Container */}
+      {/* Main Container */}
       <div className={styles.container}>
         <div className={styles.profile}>
           <div className={styles.info}>
@@ -181,32 +190,30 @@ const UserHeader = () => {
         </div>
 
         <div className={styles.usersPost}>
-          {
-            posts.length === 0 ? (
-              <h1 className={styles.fallbackHeading} >No posts here !</h1>
-            ) :
-              (
-                posts.map((post) => {
-                  return (
-                    
-                    <Posts
-                    key={post._id}
-                    postId={post._id}
-                    postedBy={post.postedBy}
-                    profilePic={post.profilePic}
-                    text={post.text}
-                    img={post.img}
-                    likes={post.likes}
-                    replies={post.replies}
-                   
-                  />
-                    
-                  )
-                }).reverse()
-              )
-          }
+          {posts.length === 0 ? (
+            <h1 className={styles.fallbackHeading}>No posts here!</h1>
+          ) : (
+            posts
+              .map((post) => (
+                <Posts
+                  key={post._id}
+                  postId={post._id}
+                  postedBy={post.postedBy}
+                  profilePic={post.profilePic}
+                  text={post.text}
+                  img={post.img}
+                  likes={post.likes}
+                  replies={post.replies}
+                />
+              ))
+              .reverse()
+          )}
         </div>
       </div>
+
+      {/* Create Post Modal */}
+      {isModalOpen && <CreatePostModal closeModal={() => setIsModalOpen(false)} />}
+
       <ToastContainer />
     </>
   );

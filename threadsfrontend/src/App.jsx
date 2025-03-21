@@ -10,6 +10,7 @@ import { selectUser } from './redux/userSlice';
 import { ToastContainer } from 'react-toastify';
 import UpdateProfilePage from './pages/UpdateProfilePage';
 import ErrorPage from './pages/ErrorPage';
+import Header from './components/Header';
 
 const AppContent = () => {
   const user = useSelector(selectUser); // User data from Redux store
@@ -48,6 +49,7 @@ const AppContent = () => {
 const App = () => {
   return (
     <Provider store={store}>
+  
     <AppContent />
     <ToastContainer/>
     </Provider>

@@ -4,8 +4,7 @@ import { setUser } from "../redux/userSlice"; // Import Redux action
 import { showLogin } from "../redux/authSlice";
 import styles from "./SignUp.module.css";
 import logo from "../assets/logo.svg";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; 
+import Swal from "sweetalert2"; // Import SweetAlert2
 import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
@@ -17,7 +16,7 @@ const SignUp = () => {
   });
 
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,30 +34,43 @@ const SignUp = () => {
 
       const data = await res.json();
       console.log(data);
-      
+
       if (data.error) {
-        toast.error(data.error, { position: "top-right" });
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: data.error,
+          position: "top-end",
+          timer: 3000,
+          showConfirmButton: false,
+        });
         return;
       }
 
       // Store user in Redux and localStorage
       dispatch(setUser(data));
 
-      // Show success message & then navigation is handled by AppContent's useEffect
-      toast.success("Signup successful!", {
-        position: "top-right",
-        autoClose: 1000,
-        theme : "dark",
-      });
-      setTimeout(()=>{
-
+      // Show success message & then navigation
+      Swal.fire({
+        icon: "success",
+        title: "Welcome!",
+        text: "Welcome to our social world!",
+        position: "top-end",
+        timer: 1000,
+        showConfirmButton: false,
+      }).then(() => {
         navigate(0);
-      },1000)
-
-      
+      });
     } catch (error) {
       console.error("Error signing up:", error.message);
-      toast.error("Network error! Please try again.", { position: "top-right" });
+      Swal.fire({
+        icon: "error",
+        title: "Network Error",
+        text: "Network error! Please try again.",
+        position: "center",
+        timer: 3000,
+        showConfirmButton: false,
+      });
     }
   };
 
@@ -120,7 +132,6 @@ const SignUp = () => {
           </p>
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 };

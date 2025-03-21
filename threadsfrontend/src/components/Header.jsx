@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaHome, FaUserCircle, FaPlusCircle, FaBars, FaTimes } from "react-icons/fa";
+import { FaHome, FaUserTie, FaPlusCircle, FaBars, FaTimes } from "react-icons/fa"; // Changed FaUserCircle to FaUserTie
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser, clearUser } from "../redux/userSlice";
 import { useNavigate } from "react-router-dom";
@@ -71,10 +71,9 @@ const Header = () => {
           <div className={styles.profileIcon}>
             {user && <span className={styles.userName}>{user.name}</span>}
             <Link to={`/${user.username}`} className={styles.profileLink}>
-              <FaUserCircle size={65} className={styles.icon} />
+              <FaUserTie size={50} className={styles.icon} /> {/* Changed to FaUserTie and reduced size */}
             </Link>
           </div>
-
 
           {user ? (
             <button className={`${styles.button} ${styles.logoutButton}`} onClick={handleLogout}>
