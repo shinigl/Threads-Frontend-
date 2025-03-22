@@ -1,7 +1,7 @@
 {
   "builds": [
     {
-      "src": "threadsfrontend/index.html",
+      "src": "threadsfrontend/*",
       "use": "@vercel/static"
     }
   ]
