@@ -29,7 +29,7 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const res = await fetch(`/api/users/login`, {
+      const res = await fetch("https://threads-backend-1-so4b.onrender.com/api/users/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
