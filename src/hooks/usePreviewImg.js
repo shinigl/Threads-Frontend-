@@ -11,7 +11,7 @@ const usePreviewImg = () => {
             reader.onload = (e) => {
                 setImgUrl(reader.result);
             }
-            reader.readAsDataURL(file);  // convert to base64 string
+            reader.readAsDataURL(file); // convert to base64 string
         } else{
             setImgUrl(null);
             
