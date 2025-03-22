@@ -12,7 +12,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target:  "http://localhost:3002",
+        target:  "https://threads-backend-1-so4b.onrender.com",
         changeOrigin: true,
         secure: false
       }
