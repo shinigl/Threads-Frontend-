@@ -1,8 +1,1 @@
-{
-  "builds": [
-    {
-      "src": "threadsfrontend/*",
-      "use": "@vercel/static"
-    }
-  ]
-}
+{ "rewrites": [{ "source": "/(.*)", "destination": "/" }] }
