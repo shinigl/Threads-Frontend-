@@ -29,7 +29,8 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const res = await fetch(`/api/users/login`, {
+      const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5174";
+      const res = await fetch(`${apiUrl}/api/users/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -46,7 +47,7 @@ const Login = () => {
         return;
       }
 
-      // Store user in Redux
+      //Store user in Redux
       dispatch(setUser(data));
      
       localStorage.setItem("user-threads", JSON.stringify(data));
