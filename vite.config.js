@@ -10,13 +10,16 @@ export default defineConfig({
     outDir: 'dist', 
   },
   server: {
+    // proxy: {
+    //   "/api": {
+    //     target:  "http://localhost:3002",
+    //     changeOrigin: true,
+    //     secure: false
+    //   }
+    // }
     proxy: {
-      "/api": {
-        target:  "https://threads-backend-1-so4b.onrender.com",
-        changeOrigin: true,
-        secure: false
-      }
-    }
+      "/api": "https://threads-backend-1-so4b.onrender.com",
+    },
   },
   define: {
     "process.env": {}, // Helps avoid issues with environment variables

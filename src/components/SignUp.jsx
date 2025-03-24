@@ -23,8 +23,9 @@ const SignUp = () => {
   };
 
   const handleSignUp = async () => {
+    const apiUrl = import.meta.env.VITE_API_URL || "https://threads-backend-1-so4b.onrender.com";
     try {
-      const res = await fetch(`/api/users/signup`, {
+      const res = await fetch(`${apiUrl}/api/users/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
