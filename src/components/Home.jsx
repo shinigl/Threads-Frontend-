@@ -84,10 +84,10 @@ const Home = () => {
         const userData = JSON.parse(localStorage.getItem("user-threads"));
         const res = await fetch(`${apiUrl}/api/posts/feed`, {
           method: "GET",
+          credentials: "include",
           headers: {
             "Authorization": `Bearer ${userData?.token}`, 
             "Content-Type": "application/json",
-            credentials: "include",
           },
         });
         const data = await res.json();
