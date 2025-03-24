@@ -422,10 +422,10 @@ const UserHeader = () => {
             <p>Threads</p>
             <div className={styles.threadsLine}></div>
           </div>
-          <div className={styles.replies}>
+          {/* <div className={styles.replies}>
             <p>Replies</p>
             <div className={styles.replyLine}></div>
-          </div>
+          </div> */}
         </div>
 
         <div className={styles.usersPost}>

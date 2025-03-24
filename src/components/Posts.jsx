@@ -433,7 +433,9 @@ const Posts = ({ postId, postedBy, profilePic, text, img }) => {
       const data = await res.json();
 
       if (res.ok) {
-        toast.success("Comment added!");
+        toast.success("Comment added!",{
+          autoClose:500
+        });
         setReplies((prev) => [...prev, data.reply]);
         setReplyText("");
       } else {

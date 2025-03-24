@@ -25,7 +25,7 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || "https://threads-backend-1-so4b.onrender.com";
+      const apiUrl = import.meta.env.VITE_API_URL || "https://threads-backend-1-so4b.onrender.com" ;
   
       const res = await fetch(`${apiUrl}/api/users/login`, {
         method: "POST",
