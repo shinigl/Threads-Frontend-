@@ -1,27 +1,107 @@
+// import React, { useEffect, useState } from "react";
+// import Header from "./Header";
+// import { toast, ToastContainer } from "react-toastify";
+// import Posts from "./Posts";
+// import styles from "./Home.module.css"; 
+
+// const Home = () => {
+//   const [posts, setPosts] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const apiUrl = import.meta.env.VITE_API_URL || "https://threads-backend-1-so4b.onrender.com";
+//   useEffect(() => {
+//     const getFeedPosts = async () => {
+//       try {
+//         const res = await fetch(`${apiUrl}/api/posts/feed`);
+//         const data = await res.json();
+//         // console.log(data);
+
+//         if (data.error) {
+//           toast.error(data.error);
+//         } else {
+//           setPosts(data);
+//         }
+//       } catch (err) {
+//         toast.error("Failed to load posts!");
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+
+//     getFeedPosts();
+//   }, []);
+  
+
+//   return (
+//     <>
+//       <Header />
+//       <ToastContainer />
+
+//       <div className={styles.container}>
+//         {loading ? (
+//           <div className={styles.loader}></div>
+//         ) : posts.length === 0 ? (
+//           <div className={styles.fallback}>
+//             <p>Wow, it's lonely in here 🥶 Either you haven’t followed anyone, or your followed ones have taken a vow of silence. 📵</p>
+//           </div>
+//         ) : (
+//           <div className={styles.postsContainer}>
+//             {posts.map((post) => (
+//               <Posts 
+//                 key={post._id}
+//                 postId={post._id}
+//                 postedBy={post.postedBy}
+//                 profilePic={post.profilePic}
+//                 text={post.text}
+//                 img={post.img}
+//                 likes={post.likes}
+//                 replies={post.replies}
+               
+//               />
+//             )).reverse()}
+//           </div>
+//         )}
+//       </div>
+//     </>
+//   );
+// };
+
+// export default Home;
+
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import { toast, ToastContainer } from "react-toastify";
 import Posts from "./Posts";
-import styles from "./Home.module.css"; 
+import styles from "./Home.module.css";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const apiUrl = import.meta.env.VITE_API_URL || "https://threads-backend-1-so4b.onrender.com";
+
   useEffect(() => {
     const getFeedPosts = async () => {
       try {
-        const res = await fetch(`${apiUrl}/api/posts/feed`);
+        const userData = JSON.parse(localStorage.getItem("user-threads"));
+        const res = await fetch(`${apiUrl}/api/posts/feed`, {
+          method: "GET",
+          headers: {
+            "Authorization": `Bearer ${userData?.token}`, // Adjust token key
+            "Content-Type": "application/json",
+          },
+        });
         const data = await res.json();
-        // console.log(data);
+        console.log("Feed response:", data);
 
-        if (data.error) {
-          toast.error(data.error);
+        if (data.message) {
+          toast.error(data.message);
+          setPosts([]);
         } else {
-          setPosts(data);
+          setPosts(Array.isArray(data) ? data : []);
         }
       } catch (err) {
+        console.error("Fetch error:", err);
         toast.error("Failed to load posts!");
+        setPosts([]);
       } finally {
         setLoading(false);
       }
@@ -29,13 +109,11 @@ const Home = () => {
 
     getFeedPosts();
   }, []);
-  
 
   return (
     <>
       <Header />
       <ToastContainer />
-
       <div className={styles.container}>
         {loading ? (
           <div className={styles.loader}></div>
@@ -46,7 +124,7 @@ const Home = () => {
         ) : (
           <div className={styles.postsContainer}>
             {posts.map((post) => (
-              <Posts 
+              <Posts
                 key={post._id}
                 postId={post._id}
                 postedBy={post.postedBy}
@@ -55,7 +133,6 @@ const Home = () => {
                 img={post.img}
                 likes={post.likes}
                 replies={post.replies}
-               
               />
             )).reverse()}
           </div>
