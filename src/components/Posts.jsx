@@ -22,11 +22,11 @@ const Posts = ({ postId, postedBy, profilePic, text, img }) => {
   const [replyText, setReplyText] = useState("");
   const [deleteModal, setDeleteModal] = useState(false);
   const [deleteCommentModal, setDeleteCommentModal] = useState(null);
-
+  const apiUrl = import.meta.env.VITE_API_URL || "https://threads-backend-1-so4b.onrender.com";
   useEffect(() => {
     const fetchPostData = async () => {
       try {
-        const res = await fetch(`/api/posts/${postId}`);
+        const res = await fetch(`${apiUrl}/api/posts/${postId}`);
         const data = await res.json();
 
         if (res.ok) {
@@ -46,7 +46,7 @@ const Posts = ({ postId, postedBy, profilePic, text, img }) => {
     const fetchUserDetails = async () => {
       try {
         if (!postedBy) return;
-        const res = await fetch("/api/users/profile/" + postedBy);
+        const res = await fetch(`${apiUrl}/api/users/profile/` + postedBy);
         const data = await res.json();
         if (!data.error) {
           setPostOwner(data);
@@ -61,7 +61,7 @@ const Posts = ({ postId, postedBy, profilePic, text, img }) => {
 
   const handleLikeUnlike = async () => {
     try {
-      const res = await fetch(`/api/posts/like/${postId}`, {
+      const res = await fetch(`${apiUrl}/api/posts/like/${postId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -84,7 +84,7 @@ const Posts = ({ postId, postedBy, profilePic, text, img }) => {
     if (!user) return toast.error("You are not logged in");
 
     try {
-      const res = await fetch(`/api/posts/reply/${postId}`, {
+      const res = await fetch(`${apiUrl}/api/posts/reply/${postId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -110,7 +110,7 @@ const Posts = ({ postId, postedBy, profilePic, text, img }) => {
   const handleDeletePost = async () => {
     try {
       setDeleteModal(false);
-      const res = await fetch(`/api/posts/${postId}`, {
+      const res = await fetch(`${apiUrl}/api/posts/${postId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${user?.token}`,
@@ -134,7 +134,7 @@ const Posts = ({ postId, postedBy, profilePic, text, img }) => {
 
   const handleDeleteComment = async (commentId) => {
     try {
-      const res = await fetch(`/api/posts/reply/${postId}/${commentId}`, {
+      const res = await fetch(`${apiUrl}/api/posts/reply/${postId}/${commentId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${user?.token}`,

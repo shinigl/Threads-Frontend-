@@ -36,7 +36,7 @@ const Login = () => {
       });
 
       const data = await res.json();
-      console.log("Response:", data);
+    
 
       if (data.error) {
         toast.error(data.error, { position: "top-right" });
@@ -52,6 +52,7 @@ const Login = () => {
 
       setTimeout(() => {
         navigate("/");
+        navigate(0)
       }, 1000);
     } catch (error) {
       console.error("Error logging in:", error.message);

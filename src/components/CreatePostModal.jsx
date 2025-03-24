@@ -17,7 +17,7 @@ const CreatePostModal = ({ closeModal }) => {
       setPostText(e.target.value);
     }
   };
-
+  const apiUrl = import.meta.env.VITE_API_URL || "https://threads-backend-1-so4b.onrender.com";
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -39,7 +39,7 @@ const CreatePostModal = ({ closeModal }) => {
         img: imgUrl, 
       };
 
-      const res = await fetch("/api/posts/create", {
+      const res = await fetch(`${apiUrl}/api/posts/create`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -7,11 +7,11 @@ import styles from "./Home.module.css";
 const Home = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const apiUrl = import.meta.env.VITE_API_URL || "https://threads-backend-1-so4b.onrender.com";
   useEffect(() => {
     const getFeedPosts = async () => {
       try {
-        const res = await fetch("/api/posts/feed");
+        const res = await fetch(`${apiUrl}/api/posts/feed`);
         const data = await res.json();
         // console.log(data);
 

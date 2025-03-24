@@ -16,10 +16,10 @@ const Header = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-
+  const apiUrl = import.meta.env.VITE_API_URL || "https://threads-backend-1-so4b.onrender.com";
   const handleLogout = async () => {
     try {
-      const res = await fetch('/api/users/logout', {
+      const res = await fetch(`${apiUrl}/api/users/logout`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
       });

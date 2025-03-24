@@ -44,12 +44,12 @@ const UserHeader = () => {
   const [isModalOpen, setIsModalOpen] = useState(false); // State for CreatePostModal
   const dropdownRef = useRef(null);
 
+  const apiUrl = import.meta.env.VITE_API_URL || "https://threads-backend-1-so4b.onrender.com";
   useEffect(() => {
     const getUser = async () => {
       if (!username) return;
-
       try {
-        const res = await fetch(`/api/users/profile/${username}`);
+        const res = await fetch(`${apiUrl}/api/users/profile/${username}`);
         const data = await res.json();
 
         if (data.error) {
@@ -70,7 +70,7 @@ const UserHeader = () => {
 
     const getPosts = async () => {
       try {
-        const res = await fetch(`/api/posts/user/${username}`);
+        const res = await fetch(`${apiUrl}/api/posts/user/${username}`);
         const data = await res.json();
         console.log(data);
         setPosts(data);
@@ -97,7 +97,7 @@ const UserHeader = () => {
     const originalState = following;
 
     try {
-      const res = await fetch(`/api/users/follow/${user._id}`, {
+      const res = await fetch(`${apiUrl}/api/users/follow/${user._id}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId: user._id }),

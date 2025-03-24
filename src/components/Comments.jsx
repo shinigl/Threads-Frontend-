@@ -10,7 +10,7 @@ const Comments = () => {
   const toggleLike = () => {
     setLiked(!liked);
   };
-
+  
   return (
     <div className={styles.commentContainer}>
       <div className={styles.header}>
