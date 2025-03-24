@@ -85,8 +85,9 @@ const Home = () => {
         const res = await fetch(`${apiUrl}/api/posts/feed`, {
           method: "GET",
           headers: {
-            "Authorization": `Bearer ${userData?.token}`, // Adjust token key
+            "Authorization": `Bearer ${userData?.token}`, 
             "Content-Type": "application/json",
+            credentials: "include",
           },
         });
         const data = await res.json();
