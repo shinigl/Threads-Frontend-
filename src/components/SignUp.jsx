@@ -41,7 +41,7 @@ const SignUp = () => {
           icon: "error",
           title: "Oops...",
           text: data.error,
-          position: "top-end",
+          position: "center",
           timer: 3000,
           showConfirmButton: false,
         });
@@ -56,7 +56,7 @@ const SignUp = () => {
         icon: "success",
         title: "Welcome!",
         text: "Welcome to our social world!",
-        position: "top-end",
+        position: "center",
         timer: 1000,
         showConfirmButton: false,
       }).then(() => {
