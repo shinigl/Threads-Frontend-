@@ -49,7 +49,11 @@ const UserHeader = () => {
     const getUser = async () => {
       if (!username) return;
       try {
-        const res = await fetch(`${apiUrl}/api/users/profile/${username}`);
+        const res = await fetch(`${apiUrl}/api/users/profile/${username}`,{
+          method : "GET",
+          credentials: include ,
+        }
+        );
         const data = await res.json();
 
         if (data.error) {
