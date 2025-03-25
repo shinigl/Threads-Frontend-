@@ -46,16 +46,15 @@ const Login = () => {
 
       dispatch(setUser(data));
       localStorage.setItem("user-threads", JSON.stringify(data));
-      Swal.fire({
-        icon: "success",
-        title: "Login Successful!",
-        text: "Redirecting to Home page...",
-        timer: 1500,
-        showConfirmButton: false,
-      }).then(() => {
-        navigate("/");
-        navigate(0); // Refresh to ensure state updates
+      toast.success("Login successful!", {
+        position: "top-right",
+        autoClose: 500,
       });
+
+      setTimeout(() => {
+        navigate("/");
+        navigate(0)
+      }, 1000);
     } catch (error) {
       console.error("Error logging in:", error.message);
       toast.error("Network error! Please try again.", { position: "top-right" });
