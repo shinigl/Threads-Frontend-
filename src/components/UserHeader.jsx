@@ -306,7 +306,7 @@ const UserHeader = () => {
           credentials: "include", // Add this for consistency
         });
         const data = await res.json();
-        console.log("Posts response:", data);
+        // console.log("Posts response:", data);
 
         if (data.error) {
           toast.error(data.error);
