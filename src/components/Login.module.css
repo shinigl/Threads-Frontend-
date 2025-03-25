@@ -158,3 +158,66 @@
        text-align: center;
    }
 }
+
+/* Existing styles remain unchanged until the media query... */
+
+@media (max-width: 768px) {
+  .loginBox {
+    position: relative;
+    z-index: 1;
+    width: 90%;
+    padding: 30px;
+    background: #1c1c1c;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+    text-align: center;
+  }
+}
+
+/* Add these new loader styles */
+.loginButton {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  background: #343232;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+  position: relative; /* Add this to existing .loginButton */
+  display: flex; /* Add this */
+  align-items: center; /* Add this */
+  justify-content: center; /* Add this */
+}
+
+.loginButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+/* Spinner animation */
+.loader::before {
+  content: "";
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ffffff;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
