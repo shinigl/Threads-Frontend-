@@ -265,7 +265,7 @@ const UpdateProfilePage = () => {
         timer: 1500,
         showConfirmButton: false,
       }).then(() => {
-        navigate(-1); // Redirect to previous page
+        navigate('/'); 
       });
     } catch (err) {
       Swal.fire({
