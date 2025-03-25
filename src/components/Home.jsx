@@ -91,7 +91,7 @@ const Home = () => {
           },
         });
         const data = await res.json();
-        console.log("Feed response:", data);
+        // console.log("Feed response:", data);
 
         if (data.message) {
           toast.error(data.message);
