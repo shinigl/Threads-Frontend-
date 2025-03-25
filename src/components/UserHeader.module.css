@@ -158,11 +158,13 @@
   /* display: flex;
   justify-content: space-around; */
   margin-top: 30px;
+  justify-content: center;
+  align-items: center;
 }
 
-.threads, .replies {
+.threads {
   text-align: center;
-  width: 50%;
+  width: 100%;
   cursor: pointer;
 }
 
