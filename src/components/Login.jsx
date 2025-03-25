@@ -22,9 +22,10 @@ const Login = () => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
+  const apiUrl = import.meta.env.VITE_API_URL || "https://threads-backend-1-so4b.onrender.com";
   const handleLogin = async () => {
     try {
-      const res = await fetch("/api/users/login", {
+      const res = await fetch(`${apiUrl}/api/users/login`, {
         method: "POST",
         credentials: "include", // Send jwt cookie
         headers: {
