@@ -508,13 +508,13 @@ const Posts = ({ postId, postedBy, profilePic, text, img }) => {
             <Link className={styles.userNameLink} to={`/${postOwner.username}`}>
               <span className={styles.userName}>{postOwner.username || "Unknown"}</span>
             </Link>
-            {postOwner.createdAt && (
+            {/* {postOwner.createdAt && (
               <span className={styles.createdOn}>
                 {formatDistanceToNow(parseISO(postOwner.createdAt), {
                   addSuffix: true,
                 })}
               </span>
-            )}
+            )} */}
           </div>
 
           {loggedInUserId === postedBy && (

@@ -394,7 +394,7 @@ const UserHeader = () => {
         </div>
 
         <div className={styles.icons}>
-          <FaInstagram className={styles.icon} />
+          {/* <FaInstagram className={styles.icon} /> */}
           <div className={styles.dropdownContainer} ref={dropdownRef}>
             <BsThreeDots onClick={() => setDropDown(!dropDown)} className={styles.icon} />
             {dropDown && (
