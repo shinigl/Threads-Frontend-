@@ -603,7 +603,7 @@ const Posts = ({ postId, postedBy, profilePic, text, img }) => {
                           })}
                         </span>
                       ) : (
-                        <span className={styles.replyTimestamp}>Just now</span>
+                        <span className={styles.replyTimestamp}>Few moments ago</span>
                       )}
                     </div>
                   </div>
