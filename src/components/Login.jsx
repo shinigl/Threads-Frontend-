@@ -6,8 +6,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 import logo from "../assets/logo.svg";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const [inputs, setInputs] = useState({
@@ -25,11 +24,9 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || "https://threads-backend-1-so4b.onrender.com" ;
-  
-      const res = await fetch(`${apiUrl}/api/users/login`, {
+      const res = await fetch("/api/users/login", {
         method: "POST",
-        credentials: "include",
+        credentials: "include", // Send jwt cookie
         headers: {
           "Content-Type": "application/json",
         },
@@ -37,27 +34,38 @@ const Login = () => {
       });
 
       const data = await res.json();
-    
 
-      if (data.error) {
-        toast.error(data.error, { position: "top-right" });
+      if (data.error || data.message) {
+        Swal.fire({
+          icon: "error",
+          title: "Login Failed",
+          text: data.error || data.message || "Invalid credentials",
+          confirmButtonText: "Try Again",
+        });
         return;
       }
 
       dispatch(setUser(data));
       localStorage.setItem("user-threads", JSON.stringify(data));
-      toast.success("Login successful! Redirecting to Home page", {
-        position: "top-right",
-        autoClose: 500,
-      });
 
-      setTimeout(() => {
+      Swal.fire({
+        icon: "success",
+        title: "Login Successful!",
+        text: "Redirecting to Home page...",
+        timer: 1500,
+        showConfirmButton: false,
+      }).then(() => {
         navigate("/");
-        navigate(0)
-      }, 1000);
+        navigate(0); // Refresh to ensure state updates
+      });
     } catch (error) {
       console.error("Error logging in:", error.message);
-      toast.error("Network error! Please try again.", { position: "top-right" });
+      Swal.fire({
+        icon: "error",
+        title: "Network Error",
+        text: "Please check your connection and try again.",
+        confirmButtonText: "OK",
+      });
     }
   };
 
@@ -67,55 +75,52 @@ const Login = () => {
   };
 
   return (
-    <>
-      <div className={styles.container}>
-        <div className={styles.loginBox}>
-          <img className={styles.logo} src={logo} alt="Logo" />
-          <p className={styles.tagline}>Welcome back</p>
+    <div className={styles.container}>
+      <div className={styles.loginBox}>
+        <img className={styles.logo} src={logo} alt="Logo" />
+        <p className={styles.tagline}>Welcome back</p>
 
-          <form onSubmit={handleSubmit} className={styles.form}>
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            onChange={handleChange}
+            value={inputs.username}
+            className={styles.input}
+            required
+          />
+          <div className={styles.passwordWrapper}>
             <input
-              type="text"
-              name="username"
-              placeholder="Username"
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="Password"
               onChange={handleChange}
-              value={inputs.username}
+              value={inputs.password}
               className={styles.input}
               required
             />
-            <div className={styles.passwordWrapper}>
-              <input
-                type={showPassword ? "text" : "password"}
-                name="password"
-                placeholder="Password"
-                onChange={handleChange}
-                value={inputs.password}
-                className={styles.input}
-                required
-              />
-              <span
-                className={styles.eyeIcon}
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? <FiEyeOff /> : <FiEye />}
-              </span>
-            </div>
-
-            <button type="submit" className={styles.loginButton}>
-              Log In
-            </button>
-          </form>
-
-          <p className={styles.signupText}>
-            Don't have an account?{" "}
-            <span onClick={() => dispatch(showSignUp())} className={styles.link}>
-              Sign Up
+            <span
+              className={styles.eyeIcon}
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <FiEyeOff /> : <FiEye />}
             </span>
-          </p>
-        </div>
+          </div>
+
+          <button type="submit" className={styles.loginButton}>
+            Log In
+          </button>
+        </form>
+
+        <p className={styles.signupText}>
+          Don't have an account?{" "}
+          <span onClick={() => dispatch(showSignUp())} className={styles.link}>
+            Sign Up
+          </span>
+        </p>
       </div>
-      <ToastContainer />
-    </>
+    </div>
   );
 };
 
