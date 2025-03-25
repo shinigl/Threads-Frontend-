@@ -6,7 +6,8 @@ import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 import logo from "../assets/logo.svg";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import Swal from "sweetalert2";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const [inputs, setInputs] = useState({
@@ -24,9 +25,11 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const res = await fetch("/api/users/login", {
+      const apiUrl = import.meta.env.VITE_API_URL || "https://threads-backend-1-so4b.onrender.com" ;
+  
+      const res = await fetch(`${apiUrl}/api/users/login`, {
         method: "POST",
-        credentials: "include", // Send jwt cookie
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -34,20 +37,15 @@ const Login = () => {
       });
 
       const data = await res.json();
+    
 
-      if (data.error || data.message) {
-        Swal.fire({
-          icon: "error",
-          title: "Login Failed",
-          text: data.error || data.message || "Invalid credentials",
-          confirmButtonText: "Try Again",
-        });
+      if (data.error) {
+        toast.error(data.error, { position: "top-right" });
         return;
       }
 
       dispatch(setUser(data));
       localStorage.setItem("user-threads", JSON.stringify(data));
-
       Swal.fire({
         icon: "success",
         title: "Login Successful!",
@@ -60,12 +58,7 @@ const Login = () => {
       });
     } catch (error) {
       console.error("Error logging in:", error.message);
-      Swal.fire({
-        icon: "error",
-        title: "Network Error",
-        text: "Please check your connection and try again.",
-        confirmButtonText: "OK",
-      });
+      toast.error("Network error! Please try again.", { position: "top-right" });
     }
   };
 
@@ -75,52 +68,55 @@ const Login = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.loginBox}>
-        <img className={styles.logo} src={logo} alt="Logo" />
-        <p className={styles.tagline}>Welcome back</p>
+    <>
+      <div className={styles.container}>
+        <div className={styles.loginBox}>
+          <img className={styles.logo} src={logo} alt="Logo" />
+          <p className={styles.tagline}>Welcome back</p>
 
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            onChange={handleChange}
-            value={inputs.username}
-            className={styles.input}
-            required
-          />
-          <div className={styles.passwordWrapper}>
+          <form onSubmit={handleSubmit} className={styles.form}>
             <input
-              type={showPassword ? "text" : "password"}
-              name="password"
-              placeholder="Password"
+              type="text"
+              name="username"
+              placeholder="Username"
               onChange={handleChange}
-              value={inputs.password}
+              value={inputs.username}
               className={styles.input}
               required
             />
-            <span
-              className={styles.eyeIcon}
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? <FiEyeOff /> : <FiEye />}
+            <div className={styles.passwordWrapper}>
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Password"
+                onChange={handleChange}
+                value={inputs.password}
+                className={styles.input}
+                required
+              />
+              <span
+                className={styles.eyeIcon}
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <FiEyeOff /> : <FiEye />}
+              </span>
+            </div>
+
+            <button type="submit" className={styles.loginButton}>
+              Log In
+            </button>
+          </form>
+
+          <p className={styles.signupText}>
+            Don't have an account?{" "}
+            <span onClick={() => dispatch(showSignUp())} className={styles.link}>
+              Sign Up
             </span>
-          </div>
-
-          <button type="submit" className={styles.loginButton}>
-            Log In
-          </button>
-        </form>
-
-        <p className={styles.signupText}>
-          Don't have an account?{" "}
-          <span onClick={() => dispatch(showSignUp())} className={styles.link}>
-            Sign Up
-          </span>
-        </p>
+          </p>
+        </div>
       </div>
-    </div>
+      <ToastContainer />
+    </>
   );
 };
 
